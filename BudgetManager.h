@@ -1,5 +1,5 @@
-#ifndef TRANSACTIONMANAGER_H
-#define TRANSACTIONMANAGER_H
+#ifndef BUDGETMANAGER_H
+#define BUDGETMANAGER_H
 
 #include <vector>
 #include <string>

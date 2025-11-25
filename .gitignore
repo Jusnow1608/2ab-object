@@ -2,11 +2,9 @@ Test/
 bin/
 obj/
 plan/
-ab-object.layout
-ab-object.depend
-ab-object.cbp
-transactions.xml
-transactions1.xml
+2ab-object.layout
+2ab-object.depend
+2ab-object.cbp
 evaluationlicense.txt
 Markup.h
 Markup.cpp

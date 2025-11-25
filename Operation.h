@@ -1,5 +1,5 @@
-#ifndef TRANSACTION_H
-#define TRANSACTION_H
+#ifndef OPERATION_H
+#define OPERATION_H
 
 #include <string>
 
