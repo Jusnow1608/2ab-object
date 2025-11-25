@@ -1,13 +1,13 @@
-#include "AuxiliatyMethods.h"
+#include "AuxiliaryMethods.h"
 
-string AuxiliatyMethods::readLine()
+string AuxiliaryMethods::readLine()
 {
     string input = "";
     getline(cin,input);
     return input;
 }
 
-char AuxiliatyMethods::readChar()
+char AuxiliaryMethods::readChar()
 {
     string input = "";
     char sign  = {0};

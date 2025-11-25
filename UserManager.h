@@ -10,7 +10,7 @@
 
 #include "User.h"
 #include "UserFile.h"
-#include "AuxiliatyMethods.h"
+#include "AuxiliaryMethods.h"
 
 using namespace std;
 
@@ -31,7 +31,7 @@ class UserManager {
 public:
     UserManager(string userFileName): userFile(userFileName) {
         loggedInUserId = 0;
-        //users = userFile.getUsersFromFile();
+        users = userFile.getUsersFromFile();
     };
 
     void registerUser();

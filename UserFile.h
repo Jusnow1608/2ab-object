@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 #include "User.h"
-//#include "AuxiliaryMethods.h"
+#include "AuxiliaryMethods.h"
 //#include "File.h"
 
 using namespace std;
@@ -17,12 +17,13 @@ class UserFile
 {
     //string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik);
     //Uzytkownik pobierzDaneUzytkownika(string dawaneJednegoUzytkownikaOddzielonePionowymiKreskami);
+    string userFileName;
 
 public:
-    UserFile(string userFileName) { //: File (fileName)
+    UserFile(const string xmlFileName = "users.xml"): userFileName (xmlFileName) { //: File (fileName)
     };
     void addUserToFile(const User &user);
-    //vector <User> getUsersFromFile();
+    vector <User> getUsersFromFile();
     //bool changePasswordInFile (int id, const string &password);
 
     /*

@@ -1,5 +1,5 @@
-#ifndef AUXILIATYMETHODS_H
-#define AUXILIATYMETHODS_H
+#ifndef AUXILIARYMETHODS_H
+#define AUXILIARYMETHODS_H
 
 #include <iostream>
 #include <sstream>
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-class AuxiliatyMethods
+class AuxiliaryMethods
 {
 public:
     static string readLine();

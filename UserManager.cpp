@@ -7,7 +7,7 @@ void UserManager::registerUser()
     User user = getNewUserDetails();
 
     users.push_back(user);
-    //plikZUzytkownikami.dopiszUzytkownikaDoPliku(user);
+    userFile.addUserToFile(user);
 
     cout << endl << "Account has been created successfully" << endl << endl;
     system("pause");
@@ -23,7 +23,7 @@ User UserManager::getNewUserDetails()
     do
     {
         cout << "Please provide name: ";
-        name = AuxiliatyMethods::readLine();
+        name = AuxiliaryMethods::readLine();
         user.name = name;
         if (name.empty())
             cout << "Name cannot be empty." << endl;
@@ -34,7 +34,7 @@ User UserManager::getNewUserDetails()
     do
     {
         cout << "Please provide surname: ";
-        surname = AuxiliatyMethods::readLine();
+        surname = AuxiliaryMethods::readLine();
         user.surname = surname;
         if (surname.empty())
             cout << "Surname cannot be empty." << endl;
@@ -46,7 +46,7 @@ User UserManager::getNewUserDetails()
     do
     {
         cout << "Please provide login: ";
-        login = AuxiliatyMethods::readLine();
+        login = AuxiliaryMethods::readLine();
         user.login = login;
         if (login.empty())
             cout << "Login cannot be empty." << endl;
@@ -57,7 +57,7 @@ User UserManager::getNewUserDetails()
     do
     {
         cout << "Please provide password: ";
-        password = AuxiliatyMethods::readLine();
+        password = AuxiliaryMethods::readLine();
         user.password = password;
         if (password.empty())
             cout << "Password cannot be empty." << endl;
