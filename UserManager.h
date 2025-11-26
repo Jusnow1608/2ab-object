@@ -19,10 +19,9 @@ class UserManager {
     bool doesLoginExist(const string &login) const;
     User getNewUserDetails();
     int generateNewUserId() const;
+    User& findUserById(int userId);
 
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
-//void findUserById (vector <Users>::iterator &itr)
-//void showAllUsers();
 //void logoutUser();
 
 public:
@@ -33,7 +32,6 @@ public:
 
     void registerUser();
     void displayAllUsers() const;
-
     void loginUser();
     void changeLoggedInUserPassword();
     //bool isUserLoggedIn();

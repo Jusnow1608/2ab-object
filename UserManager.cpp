@@ -88,12 +88,8 @@ void UserManager::loginUser() {
     cout << "Please provide login: ";
     string login = AuxiliaryMethods::readLine();
 
-    bool userFound = false;
-
     for (size_t i=0; i<users.size(); i++) {
         if (users[i].login == login) {
-
-            userFound = true;
 
             for (int attemptsNumber = MAX_ATTEMPTS; attemptsNumber > 0; attemptsNumber--) {
                 cout << "Please provide password. Trials left: " << attemptsNumber << ": ";
@@ -115,31 +111,39 @@ void UserManager::loginUser() {
     system("pause");
 }
 
-void UserManager::changeLoggedInUserPassword()
-{
+void UserManager::changeLoggedInUserPassword() {
     cout << "             >>> CHANGE PASSWORD <<<" << endl;
     cout << "-----------------------------------------------" << endl;
     string newPassword = "";
-    do
-    {
+    while (newPassword.empty()) {
         cout << "Please provide new password: ";
         newPassword = AuxiliaryMethods::readLine();
         if (newPassword.empty())
             cout << "Password cannot be empty." << endl;
     }
-    while (newPassword.empty());
+    try {
+        User& user = findUserById(loggedInUserId);
+        user.password = newPassword;
 
-    for (size_t i=0; i<users.size(); i++)
-    {
-        if (users[i].userId == loggedInUserId)
-        {
-            users[i].password = newPassword;
-            break;
+        if (userFile.changePasswordInFile(loggedInUserId, newPassword)) {
+            cout << "The password has been changed." << endl << endl;
+        } else {
+            cerr << "Failed to update password in file." << endl;
         }
     }
-    userFile.changePasswordInFile (loggedInUserId, newPassword);
-    cout << "The password has been changed." << endl << endl;
+    catch (const runtime_error& error) {
+        cerr << "Error: " << error.what() << endl;
+    }
     system("pause");
+}
+
+User& UserManager::findUserById(int userId) {
+    for (size_t i = 0; i < users.size(); i++) {
+        if (users[i].userId == userId) {
+            return users[i];
+        }
+    }
+    throw runtime_error("User with given id not found");
 }
 
 
