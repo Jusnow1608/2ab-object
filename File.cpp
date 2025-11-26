@@ -1,6 +1,6 @@
 #include "File.h"
 
-    string File::getFileName()
+    string File::getFileName() const
 {
     return FILE_NAME;
 }

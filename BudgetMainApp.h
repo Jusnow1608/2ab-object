@@ -1,12 +1,12 @@
 #ifndef BUDGETMAINAPP_H
 #define BUDGETMAINAPP_H
 
-#include <iostream>
+#include <string>
 
 #include "UserManager.h"
 //#include "BudgetManager.h"
 
-    using namespace std;
+using namespace std;
 
 class BudgetMainApp {
     UserManager userManager;
@@ -16,7 +16,7 @@ class BudgetMainApp {
 
 
 public:
-    BudgetMainApp (string userFileName): userManager (userFileName){};
+    BudgetMainApp (const string &userFileName): userManager (userFileName) {};
 
     /*
     BudgetMainApp(string nazwaPlikuZUzytkownikami, string nazwaPlikuZAdresatami, string nazwaTymczasowegoPlikuZAdresatami):
@@ -39,7 +39,7 @@ public:
     bool isLoggedIn();
     char getMainMenuSelection();
     char getUserMenuSelection();
-    void addIncome()();
+    void addIncome();
     void addExpense();
     void displayCurrentMonthBalance();
     void displayPreviousMonthBalance();

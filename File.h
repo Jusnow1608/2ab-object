@@ -1,22 +1,21 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include <iostream>
-#include <fstream>
+#include <string>
 
 using namespace std;
 
 class File {
 
     const string FILE_NAME;
-    int lastId;
+  //  int lastId;
 //XMLDocument xmlDoc;
 
 public:
-    File(string fileName): FILE_NAME (fileName) {
+    File(const string &fileName): FILE_NAME (fileName) {
     };
 
-    string getFileName();
+    string getFileName() const;
 
 };
 

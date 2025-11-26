@@ -28,11 +28,10 @@ vector <User> UserFile::getUsersFromFile() {
 
     vector <User> users;
 
-    users.clear();
     CMarkup xml;
 
     if (!xml.Load(getFileName())) {
-        cerr << "Nie udalo sie wczytac pliku XML\n";
+        cerr << "Opening file XML failed\n";
         return users;
     }
 
@@ -63,3 +62,4 @@ vector <User> UserFile::getUsersFromFile() {
     }
     return users;
 }
+
