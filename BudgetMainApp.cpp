@@ -9,3 +9,8 @@ void BudgetMainApp::displayAllUsers()
 {
     userManager.displayAllUsers();
 }
+
+void BudgetMainApp::loginUser()
+{
+    userManager.loginUser();
+}
