@@ -5,7 +5,7 @@
 int main() {
     BudgetMainApp budgetMainApp("users.xml");
     budgetMainApp.displayAllUsers();
-    budgetMainApp.registerUser();
+    //budgetMainApp.registerUser();
     budgetMainApp.loginUser();
 
 

@@ -81,31 +81,32 @@ void UserManager::displayAllUsers() const {
     system ("pause");
 }
 
-void UserManager::loginUser()
-{
+void UserManager::loginUser() {
+    const int MAX_ATTEMPTS = 3;
     cout << "             >>> LOGIN <<<" << endl;
     cout << "-----------------------------------------------" << endl;
-    string login = "", password = "";
     cout << "Please provide login: ";
-    login = AuxiliaryMethods::readLine();
-    for (size_t i=0; i<users.size(); i++)
-    {
-        if (users[i].login == login)
-        {
-            for (int attemptsNumber = 3; attemptsNumber > 0; attemptsNumber--)
-            {
-                cout << "Please provide password. Trials left: " << attemptsNumber << ": ";
-                password = AuxiliaryMethods::readLine();
+    string login = AuxiliaryMethods::readLine();
 
-                if(users[i].password == password)
-                {
+    bool userFound = false;
+
+    for (size_t i=0; i<users.size(); i++) {
+        if (users[i].login == login) {
+
+            userFound = true;
+
+            for (int attemptsNumber = MAX_ATTEMPTS; attemptsNumber > 0; attemptsNumber--) {
+                cout << "Please provide password. Trials left: " << attemptsNumber << ": ";
+                string password = AuxiliaryMethods::readLine();
+
+                if(users[i].password == password) {
                     loggedInUserId = users[i].userId;
                     cout << endl << "You have logged in." << endl << endl;
                     system("pause");
                     return;
                 }
             }
-            cout << "You entered an incorrect password 3 times." << endl;
+            cout << "You entered an incorrect password "<<MAX_ATTEMPTS<<" times." << endl;
             system("pause");
             return;
         }
