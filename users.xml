@@ -30,7 +30,7 @@
 <user>
 <id>5</id>
 <login>gerr</login>
-<password>123</password>
+<password>1234</password>
 <name>Ilona</name>
 <surname>Podlasek</surname>
 </user>
@@ -44,7 +44,7 @@
 <user>
 <id>7</id>
 <login>Kamil</login>
-<password>Skorupa</password>
+<password>Skorupa123</password>
 <name>Kamil</name>
 <surname>Skorupa</surname>
 </user>
