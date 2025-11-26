@@ -114,11 +114,39 @@ void UserManager::loginUser() {
     cout << "There is no user with this login." << endl << endl;
     system("pause");
 }
+
+void UserManager::changeLoggedInUserPassword()
+{
+    cout << "             >>> CHANGE PASSWORD <<<" << endl;
+    cout << "-----------------------------------------------" << endl;
+    string newPassword = "";
+    do
+    {
+        cout << "Please provide new password: ";
+        newPassword = AuxiliaryMethods::readLine();
+        if (newPassword.empty())
+            cout << "Password cannot be empty." << endl;
+    }
+    while (newPassword.empty());
+
+    for (size_t i=0; i<users.size(); i++)
+    {
+        if (users[i].userId == loggedInUserId)
+        {
+            users[i].password = newPassword;
+            break;
+        }
+    }
+    userFile.changePasswordInFile (loggedInUserId, newPassword);
+    cout << "The password has been changed." << endl << endl;
+    system("pause");
+}
+
+
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
 //void findUserById (vector <Users>::iterator &itr)
 //void logoutUser();
-//void changeLoggedInUserPassword();
-bool isUserLoggedIn();
+//bool isUserLoggedIn();
 //int getLoggedInUserId();
 //void showAllUsers();
 //void logoutUser();

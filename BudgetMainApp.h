@@ -31,8 +31,8 @@ public:
     void registerUser();
     void displayAllUsers();
     void loginUser();
-    /*
     void changeLoggedInUserPassword();
+    /*
     void displayAllIncomes();
     void displayAllExpenses();
     void logoutUser();

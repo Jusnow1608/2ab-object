@@ -18,8 +18,7 @@ public:
     };
     void addUserToFile(const User &user);
     vector <User> getUsersFromFile();
-
-    //bool changePasswordInFile (int id, const string &password);
+    bool changePasswordInFile (int userId, const string &password);
 
     /*
     void saveAllUsersToFile(vector <Uzytkownik> & uzytkownicy);

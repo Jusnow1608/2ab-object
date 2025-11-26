@@ -63,3 +63,35 @@ vector <User> UserFile::getUsersFromFile() {
     return users;
 }
 
+bool UserFile::changePasswordInFile(int userId, const string& newPassword) {
+    CMarkup xml;
+
+    if (!xml.Load(getFileName())) {
+        cerr << "Opening file XML failed\n";
+        return false;
+    }
+
+    if (xml.FindElem("users")) {
+        xml.IntoElem();
+
+        while (xml.FindElem("user")) {
+            xml.IntoElem();
+
+            if (xml.FindElem("id")) {
+                int currentId = stoi(xml.GetData());
+
+                if (currentId == userId) {
+                    if (xml.FindElem("password")) {
+                        xml.SetData(newPassword);
+                        xml.OutOfElem();
+                        xml.Save(getFileName());
+                        return true;
+                    }
+                }
+            }
+            xml.OutOfElem();
+        }
+    }
+    return false;
+}
+

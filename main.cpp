@@ -7,6 +7,8 @@ int main() {
     budgetMainApp.displayAllUsers();
     //budgetMainApp.registerUser();
     budgetMainApp.loginUser();
+    budgetMainApp.changeLoggedInUserPassword();
+
 
 
     return 0;
