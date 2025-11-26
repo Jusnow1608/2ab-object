@@ -19,3 +19,9 @@ void BudgetMainApp::changeLoggedInUserPassword()
 {
     userManager.changeLoggedInUserPassword();
 }
+
+void BudgetMainApp::logoutUser()
+{
+    userManager.logoutUser();
+}
+

@@ -146,10 +146,14 @@ User& UserManager::findUserById(int userId) {
     throw runtime_error("User with given id not found");
 }
 
+void UserManager::logoutUser()
+{
+    loggedInUserId = 0;
+    cout<<"You have been logged out."<<endl;
+    system("pause");
+}
 
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
-//void findUserById (vector <Users>::iterator &itr)
-//void logoutUser();
 //bool isUserLoggedIn();
 //int getLoggedInUserId();
 //void showAllUsers();

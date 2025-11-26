@@ -32,10 +32,10 @@ public:
     void displayAllUsers();
     void loginUser();
     void changeLoggedInUserPassword();
+    void logoutUser();
     /*
     void displayAllIncomes();
     void displayAllExpenses();
-    void logoutUser();
     bool isLoggedIn();
     char getMainMenuSelection();
     char getUserMenuSelection();
