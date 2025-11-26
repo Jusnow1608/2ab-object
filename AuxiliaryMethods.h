@@ -1,14 +1,8 @@
 #ifndef AUXILIARYMETHODS_H
 #define AUXILIARYMETHODS_H
 
-#include <iostream>
-#include <sstream>
-#include <algorithm>
-#include <cctype>
 #include <string>
-
-
-#include "User.h"
+#include <iostream>
 
 using namespace std;
 
@@ -17,7 +11,7 @@ class AuxiliaryMethods
 public:
     static string readLine();
     static char readChar();
-    bool validateInput(string input);
+    static bool validateInput(string &input);
 
     /*
     static string capitalizeFirstLetter(string input);

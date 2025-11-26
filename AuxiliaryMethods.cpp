@@ -1,23 +1,19 @@
 #include "AuxiliaryMethods.h"
 
-string AuxiliaryMethods::readLine()
-{
+string AuxiliaryMethods::readLine() {
     string input = "";
     getline(cin,input);
     return input;
 }
 
-char AuxiliaryMethods::readChar()
-{
+char AuxiliaryMethods::readChar() {
     string input = "";
-    char sign  = {0};
+    char sign  = '\0';
 
-    while (true)
-    {
+    while (true) {
         getline(cin, input);
 
-        if (input.length() == 1)
-        {
+        if (input.length() == 1) {
             sign = input[0];
             break;
         }

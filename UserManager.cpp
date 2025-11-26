@@ -1,7 +1,6 @@
 #include "UserManager.h"
 
-void UserManager::registerUser()
-{
+void UserManager::registerUser() {
     cout << "             >>> REGISTRATION <<<" << endl;
     cout << "-----------------------------------------------" << endl;
     User user = getNewUserDetails();
@@ -13,74 +12,56 @@ void UserManager::registerUser()
     system("pause");
 }
 
-User UserManager::getNewUserDetails()
-{
+User UserManager::getNewUserDetails() {
     User user;
-
+    string login, password, name, surname;
     user.userId = generateNewUserId();
 
-    string name;
-    do
-    {
-        cout << "Please provide name: ";
-        name = AuxiliaryMethods::readLine();
-        user.name = name;
-        if (name.empty())
-            cout << "Name cannot be empty." << endl;
-    }
-    while(name.empty());
-
-    string surname;
-    do
-    {
-        cout << "Please provide surname: ";
-        surname = AuxiliaryMethods::readLine();
-        user.surname = surname;
-        if (surname.empty())
-            cout << "Surname cannot be empty." << endl;
-    }
-    while(surname.empty());
-
-    string login;
-
-    do
-    {
+    do {
         cout << "Please provide login: ";
         login = AuxiliaryMethods::readLine();
         user.login = login;
         if (login.empty())
             cout << "Login cannot be empty." << endl;
-    }
-    while (doesLoginExist(user.login) || login.empty());
+    } while (doesLoginExist(user.login) || login.empty());
 
-    string password;
-    do
-    {
+    do {
         cout << "Please provide password: ";
         password = AuxiliaryMethods::readLine();
         user.password = password;
         if (password.empty())
             cout << "Password cannot be empty." << endl;
-    }
-    while(password.empty());
+    } while(password.empty());
+
+    do {
+        cout << "Please provide name: ";
+        name = AuxiliaryMethods::readLine();
+        user.name = name;
+        if (name.empty())
+            cout << "Name cannot be empty." << endl;
+    } while(name.empty());
+
+    do {
+        cout << "Please provide surname: ";
+        surname = AuxiliaryMethods::readLine();
+        user.surname = surname;
+        if (surname.empty())
+            cout << "Surname cannot be empty." << endl;
+    } while(surname.empty());
 
     return user;
 }
 
-int UserManager::generateNewUserId()
-{
+int UserManager::generateNewUserId() const {
     if (users.empty() == true)
         return 1;
     else
         return users.back().userId + 1;
 }
 
-bool UserManager::doesLoginExist(string login)
-{
-    for (size_t i=0; i<users.size(); i++)
-    {
-        if (users[i].login == login)
-        {
+bool UserManager::doesLoginExist(const string &login) const {
+    for (size_t i=0; i<users.size(); i++) {
+        if (users[i].login == login) {
             cout << "User with provided login already exists." << endl;
             return true;
         }
@@ -88,16 +69,14 @@ bool UserManager::doesLoginExist(string login)
     return false;
 }
 
-void UserManager::displayAllUsers()
-{
-    for (size_t i=0; i<users.size(); i++)
-    {
-        cout<<"Id:    "<<users[i].userId<<endl;
-        cout<<"Login: "<<users[i].login<<endl;
-        cout<<"Password: "<<users[i].password<<endl;
-        cout<<"Name: "<<users[i].name<<endl;
-        cout<<"Surname: "<<users[i].surname<<endl;
-        cout<<endl;
+void UserManager::displayAllUsers() const {
+    for (size_t i=0; i<users.size(); i++) {
+        cout << "Id:       "<<users[i].userId << endl;
+        cout << "Login:    "<<users[i].login << endl;
+        cout << "Password: "<<users[i].password << endl;
+        cout << "Name:     "<<users[i].name << endl;
+        cout << "Surname:  "<<users[i].surname << endl;
+        cout << endl;
     }
     system ("pause");
 }
