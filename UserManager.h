@@ -35,8 +35,8 @@ public:
     void displayAllUsers() const;
 
     void loginUser();
-    /*void changeLoggedInUserPassword();*/
-    bool isUserLoggedIn();
+    void changeLoggedInUserPassword();
+    //bool isUserLoggedIn();
    /* int getLoggedInUserId();
     void logoutUser();
         */
