@@ -8,19 +8,18 @@
 
 #include "User.h"
 #include "AuxiliaryMethods.h"
-//#include "File.h"
+#include "File.h"
 
 using namespace std;
 
-class UserFile
-//: public File
+class UserFile: public File
 {
     //string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik);
     //Uzytkownik pobierzDaneUzytkownika(string dawaneJednegoUzytkownikaOddzielonePionowymiKreskami);
     string userFileName;
 
 public:
-    UserFile(const string xmlFileName = "users.xml"): userFileName (xmlFileName) { //: File (fileName)
+    UserFile(string fileName): File (fileName) {
     };
     void addUserToFile(const User &user);
     vector <User> getUsersFromFile();
@@ -28,7 +27,6 @@ public:
 
     /*
     void saveAllUsersToFile(vector <Uzytkownik> & uzytkownicy);
-    void loadUsersFromFile();
     string formatUserDataAsFileElement();
     User parseUserFromXml();
     */

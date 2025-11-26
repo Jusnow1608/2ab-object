@@ -5,7 +5,7 @@
 void UserFile::addUserToFile(const User &user) {
     CMarkup xml;
 
-    if (!xml.Load(userFileName)) {
+    if (!xml.Load(getFileName())) {
         xml.AddElem("users");
     }
 
@@ -21,7 +21,7 @@ void UserFile::addUserToFile(const User &user) {
     xml.AddElem("surname", user.surname);
     xml.OutOfElem();
 
-    xml.Save(userFileName);
+    xml.Save(getFileName());
 }
 
 vector <User> UserFile::getUsersFromFile() {
@@ -31,7 +31,7 @@ vector <User> UserFile::getUsersFromFile() {
     users.clear();
     CMarkup xml;
 
-    if (!xml.Load(userFileName)) {
+    if (!xml.Load(getFileName())) {
         cerr << "Nie udalo sie wczytac pliku XML\n";
         return users;
     }
