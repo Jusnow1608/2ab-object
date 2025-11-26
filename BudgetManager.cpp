@@ -2,8 +2,6 @@
 #include "Markup.h"
 #include <iostream>
 
-using namespace std;
-
 
 void TransactionManager::addTransaction(const Transaction& transaction) {
     CMarkup xml;

@@ -5,13 +5,17 @@
 
 using namespace std;
 
-class Transaction {
-public:
+struct Operation {
+    int id;
+    int userId;
     string date;
-    double amount;
+    string item;
+    float amount;
 
-Transaction(const string& d, double a)
-: date(d), amount(a) {}
+    Operation(): id(0) {}
+
+    Operation(int id_, int userId_, const string& date_, const string& item_, float amount_)
+        : id(id_), userId(userId_), date(date_), item(item_), amount(amount_) {}
 
 };
 
