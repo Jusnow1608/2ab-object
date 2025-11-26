@@ -41,4 +41,11 @@
 <name>Jan</name>
 <surname>Koperski</surname>
 </user>
+<user>
+<id>7</id>
+<login>Kamil</login>
+<password>Skorupa</password>
+<name>Kamil</name>
+<surname>Skorupa</surname>
+</user>
 </users>

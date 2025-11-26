@@ -34,10 +34,10 @@ public:
     void registerUser();
     void displayAllUsers() const;
 
-    /*void loginUser();
-    void changeLoggedInUserPassword();
+    void loginUser();
+    /*void changeLoggedInUserPassword();*/
     bool isUserLoggedIn();
-    int getLoggedInUserId();
+   /* int getLoggedInUserId();
     void logoutUser();
         */
 };

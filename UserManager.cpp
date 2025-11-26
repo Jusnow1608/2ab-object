@@ -81,12 +81,43 @@ void UserManager::displayAllUsers() const {
     system ("pause");
 }
 
+void UserManager::loginUser()
+{
+    cout << "             >>> LOGIN <<<" << endl;
+    cout << "-----------------------------------------------" << endl;
+    string login = "", password = "";
+    cout << "Please provide login: ";
+    login = AuxiliaryMethods::readLine();
+    for (size_t i=0; i<users.size(); i++)
+    {
+        if (users[i].login == login)
+        {
+            for (int attemptsNumber = 3; attemptsNumber > 0; attemptsNumber--)
+            {
+                cout << "Please provide password. Trials left: " << attemptsNumber << ": ";
+                password = AuxiliaryMethods::readLine();
+
+                if(users[i].password == password)
+                {
+                    loggedInUserId = users[i].userId;
+                    cout << endl << "You have logged in." << endl << endl;
+                    system("pause");
+                    return;
+                }
+            }
+            cout << "You entered an incorrect password 3 times." << endl;
+            system("pause");
+            return;
+        }
+    }
+    cout << "There is no user with this login." << endl << endl;
+    system("pause");
+}
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
 //void findUserById (vector <Users>::iterator &itr)
 //void logoutUser();
-//void loginUser();
 //void changeLoggedInUserPassword();
-//bool isUserLoggedIn();
+bool isUserLoggedIn();
 //int getLoggedInUserId();
 //void showAllUsers();
 //void logoutUser();
