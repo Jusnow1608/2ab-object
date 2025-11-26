@@ -22,7 +22,7 @@ class UserManager {
     User& findUserById(int userId);
 
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
-//void logoutUser();
+
 
 public:
     UserManager(const string &userFileName): userFile(userFileName) {
@@ -34,9 +34,10 @@ public:
     void displayAllUsers() const;
     void loginUser();
     void changeLoggedInUserPassword();
+    void logoutUser();
+
     //bool isUserLoggedIn();
    /* int getLoggedInUserId();
-    void logoutUser();
         */
 };
 
