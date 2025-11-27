@@ -5,8 +5,11 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+
+using namespace std;
+
 class DateMethods {
-    static bool isLeapYear(int &year);
+    static bool isLeapYear(int year);
 
 public:
     static bool isDateValid(const string &date);

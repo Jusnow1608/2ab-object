@@ -13,6 +13,10 @@ void BudgetMainApp::displayAllUsers()
 void BudgetMainApp::loginUser()
 {
     userManager.loginUser();
+    if (userManager.isUserLoggedIn())
+    {
+        budgetManager = new BudgetManager(INCOME_FILE_NAME, userManager.getLoggedInUserId());
+    }
 }
 
 void BudgetMainApp::changeLoggedInUserPassword()
@@ -23,5 +27,10 @@ void BudgetMainApp::changeLoggedInUserPassword()
 void BudgetMainApp::logoutUser()
 {
     userManager.logoutUser();
+}
+
+void BudgetMainApp::addIncome()
+{
+    budgetManager->addIncome();
 }
 

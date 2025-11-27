@@ -1,17 +1,26 @@
 #ifndef OPERATIONFILE_H
 #define OPERATIONFILE_H
 
-class OperationFile
-{
- public:
-     OperationFile(string fileName);
+#include "Type.h"
+#include "File.h"
+#include "Operation.h"
 
-     bool addOperationToFile();
-     void loadOperationsFromFile();
+using namespace std;
+
+class OperationFile: public File {
+    string incomesFileName;
+
+public:
+    OperationFile(const string& incomesFileName)
+        : File(incomesFileName) {}
+
+    bool addOperationToFile(const Operation &operation);
+    int getLastOperationId() const;
+    void loadOperationsFromFile();
 };
 
+#endif
 /*
-void addTransaction(const Transaction& transaction);
     void saveTransactionToFile(const Transaction& transaction, const string& filename);
     void displayAllTransactions() const;
     void displayTransactionsByDate(const string& datePrefix) const;
@@ -24,3 +33,4 @@ void addTransaction(const Transaction& transaction);
 - parseTransactionFromXml(): Income
 - saveTransactionToFile(): void
 */
+

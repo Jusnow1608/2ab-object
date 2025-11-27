@@ -3,13 +3,14 @@
 #include "BudgetMainApp.h"
 
 int main() {
-    BudgetMainApp budgetMainApp("users.xml");
+    BudgetMainApp budgetMainApp("users.xml", "Incomes.xml");
     budgetMainApp.displayAllUsers();
     //budgetMainApp.registerUser();
     budgetMainApp.loginUser();
-    budgetMainApp.changeLoggedInUserPassword();
-    budgetMainApp.displayAllUsers();
-    budgetMainApp.logoutUser();
+    budgetMainApp.addIncome();
+    //budgetMainApp.changeLoggedInUserPassword();
+    //budgetMainApp.displayAllUsers();
+    //budgetMainApp.logoutUser();
 
 
 

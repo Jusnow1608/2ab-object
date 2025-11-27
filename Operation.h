@@ -1,6 +1,8 @@
 #ifndef OPERATION_H
 #define OPERATION_H
 
+#include "Type.h"
+
 #include <string>
 
 using namespace std;
@@ -11,6 +13,7 @@ struct Operation {
     string date;
     string item;
     float amount;
+    Type type = Type::INCOME;
 
     Operation(): id(0) {}
 
