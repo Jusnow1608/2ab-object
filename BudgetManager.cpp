@@ -24,11 +24,32 @@ Operation BudgetManager::getNewOperationDetails() {
 
     operation.id = operationFile.getLastOperationId()+1;
     operation.userId = LOGGED_IN_USER_ID;
+    cout<<"Does this income apply to today? (y/n): ";
+    string choice = AuxiliaryMethods::readLine();
 
-    operation.date = readNewValue("Please provide date (YYYY-MM-DD): ");
-    operation.item = readNewValue("Please provide item/description: ");
-    string amountStr = readNewValue("Please provide amount: ");
-    operation.amount = stod(amountStr);
+    if (choice == "y"|| choice =="Y")
+
+        operation.date = DateMethods::getTodayDate();
+    else {
+        string dateString;
+        do {
+            dateString =  readNewValue("Please provide date (YYYY-MM-DD): ");
+            if(!DateMethods::isDateValid(dateString)) {
+                cout<<"Invalid date. Please try again." << endl;
+                dateString.clear();
+            }
+        } while (dateString.empty());
+
+        int dateInt = DateMethods::formatStringDateToInt(dateString);
+        operation.date = dateInt;
+    }
+
+    operation.item = readNewValue("Please provide income description: ");
+    string amountString = readNewValue("Please provide amount (use dot or comma): ");
+    for (char &comma: amountString) {
+        if (comma == ',') comma = '.';
+    }
+    operation.amount = stod(amountString);
 
     return operation;
 }
@@ -45,10 +66,10 @@ string BudgetManager::readNewValue(const string &message) {
 }
 
 void BudgetManager::displayOperationData(Operation & operation) {
-        cout <<endl << "Id:        " << operation.id << endl;
-        cout << "UserId:    " << operation.userId << endl;
-        cout << "Date:      " << operation.date<< endl;
-        cout << "Item:      " << operation.item << endl;
-        cout << "Amount:    " << operation.amount << endl;
+    cout <<endl << "Id:        " << operation.id << endl;
+    cout << "UserId:    " << operation.userId << endl;
+    cout << "Date:      " << operation.date<< endl;
+    cout << "Item:      " << operation.item << endl;
+    cout << "Amount:    " << operation.amount << endl;
 
-    }
+}

@@ -13,12 +13,12 @@ class DateMethods {
 
 public:
     static bool isDateValid(const string &date);
-    static string getCurrentDate();
-    /*static string getPreviousMonthFirstDay();
+    static int getTodayDate();
+    static string getPreviousMonthFirstDay();
     static string getPreviousMonthLastDay();
     static string getCurrentMonthFirstDay();
 
-    static int formatStringDateToInt (string date);
+    static int formatStringDateToInt (const string& stringDate);
     static string formatIntDateToString(int year, int month, int day);
 
 
@@ -29,7 +29,6 @@ public:
 
     static bool isInPreviousMonth(const string date);
     static bool isDateBefore(const string d1, const string d2);
-    */
 };
 
 #endif

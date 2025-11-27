@@ -8,6 +8,7 @@
 #include "Operation.h"
 #include "Markup.h"
 #include "AuxiliaryMethods.h"
+#include "DateMethods.h"
 
 
 using namespace std;
@@ -15,7 +16,6 @@ using namespace std;
 class BudgetManager {
     int LOGGED_IN_USER_ID;
     OperationFile operationFile;
-    //OperationFile expenseFile;
     vector <Operation> incomes;
     //vector <Operation> expenses;
 

@@ -34,10 +34,10 @@ public:
     void changeLoggedInUserPassword();
     void logoutUser();
     void addIncome();
+    bool isUserLoggedIn();
     /*
     void displayAllIncomes();
     void displayAllExpenses();
-    bool isLoggedIn();
     char getMainMenuSelection();
     char getUserMenuSelection();
     void addExpense();
