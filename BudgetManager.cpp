@@ -35,9 +35,17 @@ Operation BudgetManager::getNewOperationDetails() {
         do {
             dateString =  readNewValue("Please provide date (YYYY-MM-DD): ");
             if(!DateMethods::isDateValid(dateString)) {
-                cout<<"Invalid date. Please try again." << endl;
+                cout<<"Invalid date format. Please try again." << endl;
                 dateString.clear();
+                continue;
             }
+            if (!DateMethods::isDateInRange(dateString)) {
+                string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
+                cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
+                dateString.clear();
+                continue;
+            }
+
         } while (dateString.empty());
 
         int dateInt = DateMethods::formatStringDateToInt(dateString);

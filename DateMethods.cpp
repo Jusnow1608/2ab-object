@@ -133,6 +133,23 @@ string DateMethods::getPreviousMonthLastDay() {
     return dt;
 }
 
+string DateMethods::getCurrentMonthLastDay() {
+    time_t teraz = time(0);
+    tm data = *localtime(&teraz);
+
+    data.tm_mon = data.tm_mon + 1;
+    data.tm_mday = 0;
+
+    mktime(&data);
+
+    int rok = data.tm_year + 1900;
+    int miesiac = data.tm_mon + 1;
+    int dzien = data.tm_mday;
+
+    string dt = formatIntDateToString(rok, miesiac, dzien);
+    return dt;
+}
+
 bool DateMethods::isInPreviousMonth(const string date) {
     string pierwszyDzien = getPreviousMonthFirstDay();  // np. "2025-10-01"
     string ostatniDzien = getPreviousMonthLastDay();    // np. "2025-10-31"
@@ -179,7 +196,6 @@ bool DateMethods::isDateBefore(string d1, string d2) {
         return false;
 }
 
-
 bool DateMethods::isDateValid(const string &date) {
     if (date.length() != 10)
         return false;
@@ -201,6 +217,19 @@ bool DateMethods::isDateValid(const string &date) {
     if (day < 1 || day > daysInMonth)
         return false;
 
+    return true;
+}
+
+
+bool DateMethods::isDateInRange(const string &date) {
+    int dateInt = formatStringDateToInt(date);
+    int minDateInt = 20000101;
+    string lastDayString = getCurrentMonthLastDay();
+    int maxDateInt = formatStringDateToInt(lastDayString);
+
+    if(dateInt < minDateInt || dateInt > maxDateInt) {
+        return false;
+    }
     return true;
 }
 

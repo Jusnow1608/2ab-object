@@ -5,6 +5,7 @@
 #include <ctime>
 #include <iomanip>
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -17,6 +18,8 @@ public:
     static string getPreviousMonthFirstDay();
     static string getPreviousMonthLastDay();
     static string getCurrentMonthFirstDay();
+    static string getCurrentMonthLastDay();
+    static bool isDateInRange(const string &date);
 
     static int formatStringDateToInt (const string& stringDate);
     static string formatIntDateToString(int year, int month, int day);

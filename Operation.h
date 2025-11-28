@@ -12,12 +12,12 @@ struct Operation {
     int userId;
     int date;
     string item;
-    float amount;
+    double amount;
     Type type = Type::INCOME;
 
     Operation(): id(0) {}
 
-    Operation(int id_, int userId_, const int& date_, const string& item_, float amount_)
+    Operation(int id_, int userId_, const int& date_, const string& item_, double amount_)
         : id(id_), userId(userId_), date(date_), item(item_), amount(amount_) {}
 
 };

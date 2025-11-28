@@ -4,11 +4,13 @@
 
 int main() {
     BudgetMainApp budgetMainApp("users.xml", "Incomes.xml");
-    budgetMainApp.displayAllUsers();
+    //budgetMainApp.displayAllUsers();
     //budgetMainApp.registerUser();
+    //budgetMainApp.registerUser();
+    //User user(1,"dastin","1234","Justyna", "Nowak-Szrajnert")
     budgetMainApp.loginUser();
     budgetMainApp.addIncome();
-    budgetMainApp.addIncome();
+    //budgetMainApp.addIncome();
     //budgetMainApp.changeLoggedInUserPassword();
     //budgetMainApp.displayAllUsers();
     //budgetMainApp.logoutUser();
@@ -29,8 +31,7 @@ int UserManager_main() {
     return 0;
 }
 #include "DateMethods.h"
-int _main() //dataDzisiejszaDniWMiesiacuRokPrzestepny
-{
+int _main() { //dataDzisiejszaDniWMiesiacuRokPrzestepny
 
     /*string data1 = formatIntDateToString(2015, 8, 4);
     cout<<"Formatowanie daty z liczb: "<<data1<<endl;
@@ -53,7 +54,7 @@ int _main() //dataDzisiejszaDniWMiesiacuRokPrzestepny
 
     int dni = getDaysInCurrentMonth();
     cout << "Obecny miesiac ma " << dni << " dni\n";
-*/
+    */
     string data = DateMethods::formatIntDateToString(2015, 8, 4);
     cout<<DateMethods::formatStringDateToInt (data);
     return 0;
