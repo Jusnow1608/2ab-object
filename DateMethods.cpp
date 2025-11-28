@@ -1,5 +1,10 @@
 #include "DateMethods.h"
 
+tm DateMethods::getNow() {
+    time_t now = time(nullptr);
+    tm currentDate = *localtime(&now);
+    return currentDate;
+}
 
 string DateMethods::formatIntDateToString(int year, int month, int day) {
     stringstream ss;
@@ -8,28 +13,35 @@ string DateMethods::formatIntDateToString(int year, int month, int day) {
     ss << month << "-";
     if (day < 10) ss << "0";
     ss << day;
-    string stringDate = ss.str();
-    return stringDate;
+    return ss.str();
 }
 
-int DateMethods::formatStringDateToInt(const string& stringDate) {
-    // Sprawdzenie d³ugoœci i separatorów
-    if (stringDate.size() != 10 || stringDate[4] != '-' || stringDate[7] != '-') {
+int DateMethods::formatStringDateToInt(const string& date) {
+    // Sprawdzenie dlugosci i separatorÃ³w
+    if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
         throw invalid_argument("Invalid date format. Expected YYYY-MM-DD.");
     }
 
-    // Wyci¹gniêcie fragmentów
-    string year = stringDate.substr(0, 4);
-    string month = stringDate.substr(5, 2);
-    string day = stringDate.substr(8, 2);
+    string year = date.substr(0, 4);
+    string month = date.substr(5, 2);
+    string day = date.substr(8, 2);
 
-    // Po³¹czenie w jeden string
     string intDate = year + month + day;
-
     // Konwersja na int
     return stoi(intDate);
 }
+string DateMethods::tmToString(const tm& date) {
+    int year = date.tm_year + 1900;
+    int month = date.tm_mon + 1;
+    int day = date.tm_mday;
+    return formatIntDateToString(year, month, day);
+}
 
+int DateMethods::tmToInt(const tm& date) {
+    string stringDate = tmToString(date);
+    int intDate = formatStringDateToInt(stringDate);
+    return intDate;
+}
 
 bool DateMethods::isLeapYear(int year) {
     bool leapYear = false;
@@ -38,18 +50,12 @@ bool DateMethods::isLeapYear(int year) {
     return leapYear;
 }
 
-int DateMethods::getTodayDate() {
-    time_t now = time(0);
-    tm date = *localtime(&now);
-
-    int year = date.tm_year + 1900;
-    int month = date.tm_mon + 1;
-    int day = date.tm_mday;
-
-    string todayStringDate = formatIntDateToString(year, month, day);
-    int todayIntDate = formatStringDateToInt (todayStringDate);
+int DateMethods::getCurrentDate() {
+    tm now = getNow();
+    int todayIntDate = tmToInt(now);
     return todayIntDate;
 }
+
 
 int DateMethods::getDaysInMonth(int year, int month) {
     int daysInMonth;
@@ -70,87 +76,54 @@ int DateMethods::getDaysInMonth(int year, int month) {
 }
 
 int DateMethods::getDaysInCurrentMonth() {
-    time_t now = time(0);
-    tm date = *localtime(&now);
-
-    int year = date.tm_year + 1900;
-    int month = date.tm_mon + 1;
-
+    tm now = getNow();
+    int year = now.tm_year + 1900;
+    int month = now.tm_mon + 1;
     int daysInCurrentMonth = getDaysInMonth(year, month);
-
     return daysInCurrentMonth;
 }
 
 
 string DateMethods::getPreviousMonthDate() {
-    time_t teraz = time(0);
-    tm data = *localtime(&teraz);
-
-    data.tm_mon = data.tm_mon - 1;    // cofamy miesi¹c o 1
-    mktime(&data);
-
-    int rok = data.tm_year + 1900;
-    int miesiac = data.tm_mon + 1;
-    int dzien = data.tm_mday;
-
-    string dt;
-    dt = formatIntDateToString(rok, miesiac, dzien);
+    tm date = getNow();
+    date.tm_mon -= 1;
+    mktime(&date);
+    string dt = tmToString(date);
     return dt;
 }
 
+
 string DateMethods::getPreviousMonthFirstDay() {
-    time_t teraz = time(0);
-    tm data = *localtime(&teraz);
-
-    data.tm_mon = data.tm_mon - 1;
-    data.tm_mday = 1;
-    mktime(&data);
-
-    int rok = data.tm_year + 1900;
-    int miesiac = data.tm_mon + 1;
-    int dzien = data.tm_mday;
-
-    string dt;
-    dt = formatIntDateToString(rok, miesiac, dzien);
+    tm date = getNow();
+    date.tm_mon -= 1;
+    date.tm_mday = 1;
+    mktime(&date);
+    string dt = tmToString(date);
     return dt;
 }
 
 string DateMethods::getPreviousMonthLastDay() {
-    time_t teraz = time(0);
-    tm data = *localtime(&teraz);
-
-    data.tm_mday = 1;
-    mktime(&data);
-
-    data.tm_mday = data.tm_mday - 1;
-    mktime(&data);
-
-    int rok = data.tm_year + 1900;
-    int miesiac = data.tm_mon + 1;
-    int dzien = data.tm_mday;
-
-    string dt = formatIntDateToString(rok, miesiac, dzien);
+    tm date = getNow();
+    date.tm_mday = 1;
+    mktime(&date);
+    date.tm_mday = 0; // dzieÅ„ 0 = ostatni dzieÅ„ poprzedniego miesiÄ…ca
+    mktime(&date);
+    string dt = tmToString(date);
     return dt;
 }
+
 
 string DateMethods::getCurrentMonthLastDay() {
-    time_t teraz = time(0);
-    tm data = *localtime(&teraz);
-
-    data.tm_mon = data.tm_mon + 1;
-    data.tm_mday = 0;
-
-    mktime(&data);
-
-    int rok = data.tm_year + 1900;
-    int miesiac = data.tm_mon + 1;
-    int dzien = data.tm_mday;
-
-    string dt = formatIntDateToString(rok, miesiac, dzien);
+    tm date = getNow();
+    date.tm_mon += 1;
+    date.tm_mday = 0;
+    mktime(&date);
+    string dt = tmToString(date);
     return dt;
 }
 
-bool DateMethods::isInPreviousMonth(const string date) {
+
+bool DateMethods::isInPreviousMonth(const string &date) {
     string pierwszyDzien = getPreviousMonthFirstDay();  // np. "2025-10-01"
     string ostatniDzien = getPreviousMonthLastDay();    // np. "2025-10-31"
 
@@ -167,70 +140,38 @@ bool isDateEarlier(string dataPierwsza, string dataDruga) {
         return false;
 }
 
-bool DateMethods::isDateBefore(string d1, string d2) {
-    int y1, m1, d_1;
-    int y2, m2, d_2;
-
-    char dash; // do wczytania znaków '-' miêdzy liczbami
-
-    stringstream ss1(d1);
-    ss1 >> y1 >> dash >> m1 >> dash >> d_1;
-
-    stringstream ss2(d2);
-    ss2 >> y2 >> dash >> m2 >> dash >> d_2;
-
-    tm a = {}, b = {};
-    a.tm_year = y1 - 1900;
-    a.tm_mon = m1 - 1;
-    a.tm_mday = d_1;
-
-    b.tm_year = y2 - 1900;
-    b.tm_mon = m2 - 1;
-    b.tm_mday = d_2;
-
-    time_t t1 = mktime(&a);
-    time_t t2 = mktime(&b);
-    if (t1 < t2)
-        return true;
-    else
-        return false;
+bool DateMethods::isDateBefore(const string& d1, const string& d2) {
+    int intDate1 = formatStringDateToInt(d1);
+    int intDate2 = formatStringDateToInt(d2);
+    bool result = (intDate1 < intDate2);
+    return result;
 }
 
+
 bool DateMethods::isDateValid(const string &date) {
-    if (date.length() != 10)
+    if (date.length() != 10 || date[4] != '-' || date[7] != '-') {
         return false;
-    if (date[4] != '-' || date[7] != '-')
-        return false;
+    }
 
     int year = stoi(date.substr(0, 4));
     int month = stoi(date.substr(5, 2));
     int day = stoi(date.substr(8, 2));
 
-    if (year < 2000 || year > 9999)
-        return false;
-
-    if (month < 1 || month > 12)
-        return false;
+    if (year < 2000 || year > 9999) return false;
+    if (month < 1 || month > 12) return false;
 
     int daysInMonth = getDaysInMonth(year, month);
-
-    if (day < 1 || day > daysInMonth)
-        return false;
+    if (day < 1 || day > daysInMonth) return false;
 
     return true;
 }
 
-
 bool DateMethods::isDateInRange(const string &date) {
     int dateInt = formatStringDateToInt(date);
     int minDateInt = 20000101;
-    string lastDayString = getCurrentMonthLastDay();
-    int maxDateInt = formatStringDateToInt(lastDayString);
-
-    if(dateInt < minDateInt || dateInt > maxDateInt) {
-        return false;
-    }
-    return true;
+    int maxDateInt = formatStringDateToInt(getCurrentMonthLastDay());
+    bool result = (dateInt >= minDateInt && dateInt <= maxDateInt);
+    return result;
 }
 
 
