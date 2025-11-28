@@ -9,6 +9,7 @@
 #include "Markup.h"
 #include "AuxiliaryMethods.h"
 #include "DateMethods.h"
+#include "CashMethods.h"
 
 
 using namespace std;

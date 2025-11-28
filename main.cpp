@@ -3,7 +3,7 @@
 #include "BudgetMainApp.h"
 
 int main() {
-    BudgetMainApp budgetMainApp("users.xml", "Incomes.xml");
+    BudgetMainApp budgetMainApp("users.xml", "incomes.xml");
     //budgetMainApp.displayAllUsers();
     //budgetMainApp.registerUser();
     //budgetMainApp.registerUser();
@@ -49,7 +49,7 @@ int _main() { //dataDzisiejszaDniWMiesiacuRokPrzestepny
     bool czyOK = isDateValid("2025-10-32");
     cout<<"Czy data 2025-10-32 jest poprawna? "<<czyOK<<endl;
 
-    string today = getTodayDate();
+    string today = getCurrentDate();
     cout << "Dzisiejsza data: " << today << '\n';
 
     int dni = getDaysInCurrentMonth();

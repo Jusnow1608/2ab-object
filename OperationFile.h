@@ -12,11 +12,11 @@
 using namespace std;
 
 class OperationFile: public File {
-    string incomesFileName;
+    string incomeFileName;
 
 public:
-    OperationFile(const string& incomesFileName)
-        : File(incomesFileName) {}
+    OperationFile(const string& incomeFileName)
+        : File(incomeFileName) {}
 
     bool addOperationToFile(const Operation &operation);
     int getLastOperationId() const;
@@ -31,10 +31,6 @@ public:
     void displayTransactionsByAmount(double threshold, const string& condition) const
 
 + getTransactionsForLoggedInUser(): vector <Operation>
-+ getLastTransactionId(): integer
 
-- formatTransactionDataAsFileElement(): string
-- parseTransactionFromXml(): Income
-- saveTransactionToFile(): void
 */
 

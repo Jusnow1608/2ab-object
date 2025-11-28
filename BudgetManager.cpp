@@ -29,13 +29,13 @@ Operation BudgetManager::getNewOperationDetails() {
 
     if (choice == "y"|| choice =="Y")
 
-        operation.date = DateMethods::getTodayDate();
+        operation.date = DateMethods::getCurrentDate();
     else {
         string dateString;
         do {
             dateString =  readNewValue("Please provide date (YYYY-MM-DD): ");
             if(!DateMethods::isDateValid(dateString)) {
-                cout<<"Invalid date format. Please try again." << endl;
+                cout<<"Invalid date format. " << endl;
                 dateString.clear();
                 continue;
             }
@@ -45,19 +45,27 @@ Operation BudgetManager::getNewOperationDetails() {
                 dateString.clear();
                 continue;
             }
-
         } while (dateString.empty());
 
-        int dateInt = DateMethods::formatStringDateToInt(dateString);
-        operation.date = dateInt;
+        operation.date = DateMethods::formatStringDateToInt(dateString);
     }
 
     operation.item = readNewValue("Please provide income description: ");
-    string amountString = readNewValue("Please provide amount (use dot or comma): ");
-    for (char &comma: amountString) {
-        if (comma == ',') comma = '.';
-    }
-    operation.amount = stod(amountString);
+    string amount;
+    do {
+
+        amount = readNewValue("Please provide amount (use dot or comma): ");
+        for (char &comma: amount) {
+            if (comma == ',') comma = '.';
+        }
+        if (!CashMethods::isAmountValid(amount)) {
+            cout << "Invalid amount. " << endl;
+            amount.clear();
+        }
+
+    } while (amount.empty());
+
+        operation.amount = stod(amount);
 
     return operation;
 }

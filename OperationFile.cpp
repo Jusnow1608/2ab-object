@@ -8,15 +8,10 @@ bool OperationFile::addOperationToFile(const Operation &operation) {
 
     if (!xml.Load(getFileName())) {
         xml.AddElem("incomes");
-        xml.IntoElem();
-    } else {
-        if (xml.FindElem("incomes")) {
-            xml.IntoElem();
-        } else {
-            cerr << "Blad: plik istnieje, ale nie zawiera elementu <incomes>\n";
-            return false;
-        }
     }
+
+    xml.FindElem("incomes");
+    xml.IntoElem();
 
     xml.AddElem("income");
     xml.IntoElem();
@@ -26,7 +21,7 @@ bool OperationFile::addOperationToFile(const Operation &operation) {
     xml.AddElem("item", operation.item);
 
     ostringstream oss;
-    oss << fixed << setprecision(2) << operation.amount;
+    oss << fixed << setprecision(2) << static_cast<double>(operation.amount);
     xml.AddElem("amount", oss.str());
 
     xml.OutOfElem();
@@ -40,22 +35,17 @@ int OperationFile::getLastOperationId() const {
     CMarkup xml;
     int lastOperationId = 0;
 
-    if (!xml.Load(getFileName())) {
+    if (!xml.Load(getFileName()))
         return lastOperationId;
-    }
+    if (!xml.FindElem("incomes"))
+        return lastOperationId;
 
-    if (!xml.FindElem("incomes")) {
-        return lastOperationId;
-    }
     xml.IntoElem();
-
     while (xml.FindElem("income")) {
         xml.IntoElem();
-
         if (xml.FindElem("id")) {
             lastOperationId = stoi(xml.GetData());
         }
-
         xml.OutOfElem();
     }
 

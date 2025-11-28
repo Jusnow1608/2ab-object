@@ -15,7 +15,7 @@ class BudgetMainApp {
     //const string EXPENSE_FILE_NAME;
 
 public:
-    BudgetMainApp (const string &userFileName, const string &incomesFileName): userManager (userFileName),INCOME_FILE_NAME (incomesFileName)  {
+    BudgetMainApp (const string &userFileName, const string &incomeFileName): userManager (userFileName),INCOME_FILE_NAME (incomeFileName)  {
         budgetManager = NULL;
     };
     ~BudgetMainApp() {
