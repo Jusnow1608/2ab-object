@@ -1,27 +1,36 @@
 #include "BudgetMainApp.h"
 
-void BudgetMainApp::registerUser()
-{
+void BudgetMainApp::registerUser() {
     userManager.registerUser();
 }
 
-void BudgetMainApp::displayAllUsers()
-{
+void BudgetMainApp::displayAllUsers() {
     userManager.displayAllUsers();
 }
 
-void BudgetMainApp::loginUser()
-{
+void BudgetMainApp::loginUser() {
     userManager.loginUser();
+    if (isUserLoggedIn()) {
+        budgetManager = new BudgetManager(INCOME_FILE_NAME, userManager.getLoggedInUserId());
+    }
 }
 
-void BudgetMainApp::changeLoggedInUserPassword()
-{
+void BudgetMainApp::changeLoggedInUserPassword() {
     userManager.changeLoggedInUserPassword();
 }
 
-void BudgetMainApp::logoutUser()
-{
+void BudgetMainApp::logoutUser() {
     userManager.logoutUser();
+}
+
+void BudgetMainApp::addIncome() {
+    budgetManager->addIncome();
+}
+
+bool BudgetMainApp::isUserLoggedIn() {
+    if (userManager.isUserLoggedIn())
+        return true;
+    else
+        return false;
 }
 

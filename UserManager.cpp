@@ -153,8 +153,17 @@ void UserManager::logoutUser()
     system("pause");
 }
 
+bool UserManager::isUserLoggedIn()
+{
+    if (loggedInUserId > 0)
+        return true;
+    else
+        return false;
+}
+
+
+int UserManager::getLoggedInUserId()
+{
+    return loggedInUserId;
+}
 //void findUserByLogin(const string &login, vector <Users>::iterator &itr);
-//bool isUserLoggedIn();
-//int getLoggedInUserId();
-//void showAllUsers();
-//void logoutUser();

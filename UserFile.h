@@ -8,8 +8,7 @@
 
 using namespace std;
 
-class UserFile: public File
-{
+class UserFile: public File {
     //string zamienDaneUzytkownikaNaLinieZDanymiOddzielonaPionowymiKreskami(Uzytkownik uzytkownik);
     //Uzytkownik pobierzDaneUzytkownika(string dawaneJednegoUzytkownikaOddzielonePionowymiKreskami);
 

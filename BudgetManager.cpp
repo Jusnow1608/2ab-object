@@ -1,117 +1,83 @@
 #include "BudgetManager.h"
-#include "Markup.h"
+
 #include <iostream>
 
-using namespace std;
-
-
-void TransactionManager::addTransaction(const Transaction& transaction) {
-    CMarkup xml;
-
-    if (!xml.Load(fileName)) {
-        xml.AddElem("transactions");
+void BudgetManager::addIncome() {
+    Operation income;
+    system("cls");
+    cout << " >>> ADD INCOME <<<" << endl << endl;
+    cout << "-----------------------------------------------" << endl;
+    income = getNewOperationDetails();
+    incomes.push_back(income);
+    if(operationFile.addOperationToFile(income)) {
+        cout << "New income has been added." << endl;
+        displayOperationData(income);
     }
 
-    xml.FindElem("transactions");
-    xml.IntoElem();
-
-    xml.AddElem("transaction");
-    xml.IntoElem();
-    xml.AddElem("date", transaction.date);
-    xml.AddElem("amount", to_string(transaction.amount));
-    xml.OutOfElem();
-
-    xml.Save(fileName);
-    transactions.push_back(transaction);
+    else
+        cout << "Error. Failed to add new income." << endl;
+    system("pause");
 }
 
-void TransactionManager::saveTransactionToFile(const Transaction& transaction, const string& filename) {
-    CMarkup xml;
+Operation BudgetManager::getNewOperationDetails() {
+    Operation operation;
 
-    if (!xml.Load(filename)) {
-        xml.AddElem("transactions");
+    operation.id = operationFile.getLastOperationId()+1;
+    operation.userId = LOGGED_IN_USER_ID;
+    cout<<"Does this income apply to today? (y/n): ";
+    string choice = AuxiliaryMethods::readLine();
+
+    if (choice == "y"|| choice =="Y")
+
+        operation.date = DateMethods::getTodayDate();
+    else {
+        string dateString;
+        do {
+            dateString =  readNewValue("Please provide date (YYYY-MM-DD): ");
+            if(!DateMethods::isDateValid(dateString)) {
+                cout<<"Invalid date format. Please try again." << endl;
+                dateString.clear();
+                continue;
+            }
+            if (!DateMethods::isDateInRange(dateString)) {
+                string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
+                cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
+                dateString.clear();
+                continue;
+            }
+
+        } while (dateString.empty());
+
+        int dateInt = DateMethods::formatStringDateToInt(dateString);
+        operation.date = dateInt;
     }
 
-    xml.FindElem("transactions");
-    xml.IntoElem();
+    operation.item = readNewValue("Please provide income description: ");
+    string amountString = readNewValue("Please provide amount (use dot or comma): ");
+    for (char &comma: amountString) {
+        if (comma == ',') comma = '.';
+    }
+    operation.amount = stod(amountString);
 
-    xml.AddElem("transaction");
-    xml.IntoElem();
-    xml.AddElem("date", transaction.date);
-    xml.AddElem("amount", to_string(transaction.amount));
-    xml.OutOfElem();
-
-    xml.Save(filename);
+    return operation;
 }
 
-
-void TransactionManager::loadTransactionsFromFile() {
-    transactions.clear();
-    CMarkup xml;
-
-    if (!xml.Load(fileName)) {
-        cerr << "Nie uda³o siê wczytaæ pliku XML\n";
-        return;
-    }
-
-    xml.FindElem("transactions");
-    xml.IntoElem();
-
-    while (xml.FindElem("transaction")) {
-        xml.IntoElem();
-
-        xml.FindElem("date");
-        string date = xml.GetData();
-
-        xml.FindElem("amount");
-        double amount = stod(xml.GetData());
-
-        transactions.emplace_back(date, amount);
-
-        xml.OutOfElem();
-    }
+string BudgetManager::readNewValue(const string &message) {
+    string value;
+    do {
+        cout << message;
+        value = AuxiliaryMethods::readLine();
+        if(value.empty())
+            cout << "Value cannot be empty. " << endl;
+    } while (value.empty());
+    return value;
 }
 
-void TransactionManager::displayAllTransactions() const {
-    for (const auto& t : transactions) {
-        cout << "Data: " << t.date << ", Kwota: " << t.amount << '\n';
-    }
-}
+void BudgetManager::displayOperationData(Operation & operation) {
+    cout <<endl << "Id:        " << operation.id << endl;
+    cout << "UserId:    " << operation.userId << endl;
+    cout << "Date:      " << operation.date<< endl;
+    cout << "Item:      " << operation.item << endl;
+    cout << "Amount:    " << operation.amount << endl;
 
-void TransactionManager::displayTransactionsByDate(const string& datePrefix) const {
-    bool found = false;
-    for (const auto& t : transactions) {
-        if (t.date.rfind(datePrefix, 0) == 0) { // zaczyna siê od datePrefix
-            cout << "Data: " << t.date << ", Kwota: " << t.amount << '\n';
-            found = true;
-        }
-    }
-    if (!found) {
-        cout << "Brak transakcji dla daty: " << datePrefix << '\n';
-    }
-}
-
-void TransactionManager::displayTransactionsByAmount(double threshold, const string& condition) const {
-    bool found = false;
-
-    for (const auto& t : transactions) {
-        bool match = false;
-
-        if (condition == "greater") {
-            match = t.amount > threshold;
-        } else if (condition == "less") {
-            match = t.amount < threshold;
-        } else if (condition == "equal") {
-            match = t.amount == threshold;
-        }
-
-        if (match) {
-            cout << "Data: " << t.date << ", Kwota: " << t.amount << '\n';
-            found = true;
-        }
-    }
-
-    if (!found) {
-        cout << "Brak transakcji spelniajacych warunek kwoty: " << condition << " " << threshold << '\n';
-    }
 }

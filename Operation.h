@@ -1,17 +1,24 @@
 #ifndef OPERATION_H
 #define OPERATION_H
 
+#include "Type.h"
+
 #include <string>
 
 using namespace std;
 
-class Transaction {
-public:
-    string date;
+struct Operation {
+    int id;
+    int userId;
+    int date;
+    string item;
     double amount;
+    Type type = Type::INCOME;
 
-Transaction(const string& d, double a)
-: date(d), amount(a) {}
+    Operation(): id(0) {}
+
+    Operation(int id_, int userId_, const int& date_, const string& item_, double amount_)
+        : id(id_), userId(userId_), date(date_), item(item_), amount(amount_) {}
 
 };
 
