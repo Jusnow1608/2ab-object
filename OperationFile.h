@@ -13,6 +13,7 @@ using namespace std;
 
 class OperationFile: public File {
     string incomeFileName;
+    string expenseFileName;
 
 public:
     OperationFile(const string& incomeFileName)

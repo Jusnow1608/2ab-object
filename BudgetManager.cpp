@@ -7,9 +7,9 @@ void BudgetManager::addIncome() {
     system("cls");
     cout << " >>> ADD INCOME <<<" << endl << endl;
     cout << "-----------------------------------------------" << endl;
-    income = getNewOperationDetails();
+    income = getNewOperationDetails(Type::INCOME);
     incomes.push_back(income);
-    if(operationFile.addOperationToFile(income)) {
+    if(incomeFile.addOperationToFile(income)) {
         cout << "New income has been added." << endl;
         displayOperationData(income);
     }
@@ -19,12 +19,14 @@ void BudgetManager::addIncome() {
     system("pause");
 }
 
-Operation BudgetManager::getNewOperationDetails() {
+Operation BudgetManager::getNewOperationDetails(const Type &type) {
     Operation operation;
-
-    operation.id = operationFile.getLastOperationId()+1;
+    if (type == Type::INCOME)
+        operation.id = incomeFile.getLastOperationId()+1;
+    else
+        operation.id = expenseFile.getLastOperationId()+1;
     operation.userId = LOGGED_IN_USER_ID;
-    cout<<"Does this income apply to today? (y/n): ";
+    cout<<"Does this operation apply to today? (y/n): ";
     string choice = AuxiliaryMethods::readLine();
 
     if (choice == "y"|| choice =="Y")
@@ -50,10 +52,9 @@ Operation BudgetManager::getNewOperationDetails() {
         operation.date = DateMethods::formatStringDateToInt(dateString);
     }
 
-    operation.item = readNewValue("Please provide income description: ");
+    operation.item = readNewValue("Please provide operation description: ");
     string amount;
     do {
-
         amount = readNewValue("Please provide amount (use dot or comma): ");
         for (char &comma: amount) {
             if (comma == ',') comma = '.';
@@ -65,7 +66,7 @@ Operation BudgetManager::getNewOperationDetails() {
 
     } while (amount.empty());
 
-        operation.amount = stod(amount);
+    operation.amount = stod(amount);
 
     return operation;
 }
@@ -89,3 +90,45 @@ void BudgetManager::displayOperationData(Operation & operation) {
     cout << "Amount:    " << operation.amount << endl;
 
 }
+
+void BudgetManager::displayAllOperations() {
+    system("cls");
+    if (!incomes.empty()) {
+        cout << "             >>> INCOMES <<<" << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (size_t i=0; i<incomes.size(); i++) {
+            displayOperationData(incomes[i]);
+        }
+        cout << endl;
+    } else {
+        cout << endl << "There is no incomes yet." << endl << endl;
+    }
+    if (!expenses.empty()) {
+        cout << "             >>> EXPENSES <<<" << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (size_t i=0; i<expenses.size(); i++) {
+            displayOperationData(expenses[i]);
+        }
+        cout << endl;
+    } else {
+        cout << endl << "There is no expenses yet." << endl << endl;
+    }
+    system("pause");
+}
+
+
+void BudgetManager::addExpense() {
+    Operation expense;
+    system("cls");
+    cout << " >>> ADD EXPENSE <<<" << endl << endl;
+    cout << "-----------------------------------------------" << endl;
+    expense = getNewOperationDetails(Type::EXPENSE);
+    expenses.push_back(expense);
+    // if(expenseFile.addOperationToFile(expense)) {
+    //    cout << "New expense has been added." << endl;
+    displayOperationData(expense);
+    //} else
+    //    cout << "Error. Failed to add new expense." << endl;
+    system("pause");
+}
+

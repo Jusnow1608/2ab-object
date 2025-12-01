@@ -12,12 +12,14 @@ class BudgetMainApp {
     UserManager userManager;
     BudgetManager *budgetManager;
     const string INCOME_FILE_NAME;
-    //const string EXPENSE_FILE_NAME;
+    const string EXPENSE_FILE_NAME;
 
 public:
-    BudgetMainApp (const string &userFileName, const string &incomeFileName): userManager (userFileName),INCOME_FILE_NAME (incomeFileName)  {
+    BudgetMainApp (const string &userFileName, const string &incomeFileName, const string &expenseFileName):
+        userManager (userFileName),INCOME_FILE_NAME (incomeFileName), EXPENSE_FILE_NAME (expenseFileName)  {
         budgetManager = NULL;
     };
+
     ~BudgetMainApp() {
         delete budgetManager;
         budgetManager = NULL;
@@ -35,12 +37,11 @@ public:
     void logoutUser();
     void addIncome();
     bool isUserLoggedIn();
+    void addExpense();
+    void displayAllOperations();
     /*
-    void displayAllIncomes();
-    void displayAllExpenses();
     char getMainMenuSelection();
     char getUserMenuSelection();
-    void addExpense();
     void displayCurrentMonthBalance();
     void displayPreviousMonthBalance();
     void displaySelectedPeriodBalance();
