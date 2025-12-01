@@ -12,15 +12,16 @@
 using namespace std;
 
 class OperationFile: public File {
-    string incomeFileName;
+    Type fileType;
 
 public:
-    OperationFile(const string& incomeFileName)
-        : File(incomeFileName) {}
+    OperationFile(const string& fileName, Type type)
+        : File(fileName), fileType(type) {}
 
     bool addOperationToFile(const Operation &operation);
     int getLastOperationId() const;
     void loadOperationsFromFile();
+    Type getFileType() const;
 };
 
 #endif

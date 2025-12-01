@@ -11,7 +11,7 @@ void BudgetMainApp::displayAllUsers() {
 void BudgetMainApp::loginUser() {
     userManager.loginUser();
     if (isUserLoggedIn()) {
-        budgetManager = new BudgetManager(INCOME_FILE_NAME, userManager.getLoggedInUserId());
+        budgetManager = new BudgetManager(INCOME_FILE_NAME, EXPENSE_FILE_NAME, userManager.getLoggedInUserId());
     }
 }
 
@@ -32,5 +32,14 @@ bool BudgetMainApp::isUserLoggedIn() {
         return true;
     else
         return false;
+}
+
+void BudgetMainApp::addExpense() {
+    budgetManager->addExpense();
+}
+
+void BudgetMainApp::displayAllOperations()
+{
+  budgetManager->displayAllOperations();
 }
 

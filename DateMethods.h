@@ -25,11 +25,11 @@ public:
     static tm getNow();
     static int getCurrentDate();
 
-    // Obs³uga miesiêcy i lat
+    // Obsluga miesiecy i lat
     static int getDaysInMonth(int year, int month);
     static int getDaysInCurrentMonth();
 
-    // Daty zwi¹zane z miesi¹cami
+    // Daty zwiazane z miesiacami
     static string getPreviousMonthDate();
     static string getPreviousMonthFirstDay();
     static string getPreviousMonthLastDay();

@@ -10,42 +10,42 @@
 #include "AuxiliaryMethods.h"
 #include "DateMethods.h"
 #include "CashMethods.h"
+#include "Type.h"
 
 
 using namespace std;
 
 class BudgetManager {
     int LOGGED_IN_USER_ID;
-    OperationFile operationFile;
+    OperationFile incomeFile;
+    OperationFile expenseFile;
     vector <Operation> incomes;
-    //vector <Operation> expenses;
+    vector <Operation> expenses;
 
-    Operation getNewOperationDetails();
+    Operation getNewOperationDetails(const Type &type);
     string readNewValue(const string &message);
     void displayOperationData(Operation & operation);
     //void displayBalance(int startDate, int endDate);
     //double calculateBalance(int startDate, int endDate, const Type &type);
 
 public:
-    BudgetManager(const string &incomesFile, int loggedInUserId)
-        : operationFile(incomesFile), LOGGED_IN_USER_ID(loggedInUserId) {}
+    BudgetManager(const string &incomeFileName,const string &expenseFileName, int loggedInUserId)
+        : incomeFile(incomeFileName, Type::INCOME), expenseFile(expenseFileName, Type::EXPENSE),LOGGED_IN_USER_ID(loggedInUserId) {}
 
     void addIncome();
+    void addExpense();
+    void displayAllOperations();
 };
 
-/*PlikZAdresatami(string nazwaPliku, string nazwaTymczasowegoPlikuZAdresatami):
-    PlikTekstowy (nazwaPliku), NAZWA_TYMCZASOWEGO_PLIKU_Z_ADRESATAMI (nazwaTymczasowegoPlikuZAdresatami), idOstatniegoAdresata(pobierzZPlikuIdOstatniegoAdresata())
-    {
-    }*/
 
-/*void  addExpense() ;
+/*
 void displayCurrentMonthBalance();
 void displayPreviousMonthBalance();
 void displaySelectedPeriodBalance();
 };
 - expenseFileName: string
 - incomeFileName: string
-+ displayAllOperations(): void
++
 + displayOperationsByDate(): void
 + displayOperationsByAmount(): void
 
