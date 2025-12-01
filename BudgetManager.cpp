@@ -2,21 +2,31 @@
 
 #include <iostream>
 
-void BudgetManager::addIncome() {
-    Operation income;
+void BudgetManager::addOperation(const Type &type) {
     system("cls");
-    cout << " >>> ADD INCOME <<<" << endl << endl;
+    cout << " >>> ADD "<<typeToString(type) <<"<<<" << endl << endl;
     cout << "-----------------------------------------------" << endl;
-    income = getNewOperationDetails(Type::INCOME);
-    incomes.push_back(income);
-    if(incomeFile.addOperationToFile(income)) {
-        cout << "New income has been added." << endl;
-        displayOperationData(income);
+    Operation operation = getNewOperationDetails(type);
+
+    if (type == Type::INCOME) {
+        incomes.push_back(operation);
+        if(incomeFile.addOperationToFile(operation)) {
+            cout << "New income has been added." << endl;
+            displayOperationData(operation);
+        } else
+            cout << "Error. Failed to add new income." << endl;
+        system("pause");
     }
 
-    else
-        cout << "Error. Failed to add new income." << endl;
-    system("pause");
+    else {
+        expenses.push_back(operation);
+        if(expenseFile.addOperationToFile(operation)) {
+            cout << "New expense has been added." << endl;
+            displayOperationData(operation);
+        } else
+            cout << "Error. Failed to add new expense." << endl;
+        system("pause");
+    }
 }
 
 Operation BudgetManager::getNewOperationDetails(const Type &type) {
@@ -82,7 +92,7 @@ string BudgetManager::readNewValue(const string &message) {
     return value;
 }
 
-void BudgetManager::displayOperationData(Operation & operation) {
+void BudgetManager::displayOperationData(const Operation & operation) {
     cout <<endl << "Id:        " << operation.id << endl;
     cout << "UserId:    " << operation.userId << endl;
     cout << "Date:      " << operation.date<< endl;
@@ -91,44 +101,29 @@ void BudgetManager::displayOperationData(Operation & operation) {
 
 }
 
+void BudgetManager::displayOperations(const vector<Operation> &operations, const string &title) {
+    if (!operations.empty()) {
+        cout << "             >>> " << title << " <<<" << endl;
+        cout << "-----------------------------------------------" << endl;
+        for (size_t i=0; i<operations.size(); i++) {
+            displayOperationData(operations[i]);
+        }
+        cout << endl;
+    } else {
+        cout << endl << "There is no " << title << " yet." << endl << endl;
+    }
+}
+
 void BudgetManager::displayAllOperations() {
     system("cls");
-    if (!incomes.empty()) {
-        cout << "             >>> INCOMES <<<" << endl;
-        cout << "-----------------------------------------------" << endl;
-        for (size_t i=0; i<incomes.size(); i++) {
-            displayOperationData(incomes[i]);
-        }
-        cout << endl;
-    } else {
-        cout << endl << "There is no incomes yet." << endl << endl;
-    }
-    if (!expenses.empty()) {
-        cout << "             >>> EXPENSES <<<" << endl;
-        cout << "-----------------------------------------------" << endl;
-        for (size_t i=0; i<expenses.size(); i++) {
-            displayOperationData(expenses[i]);
-        }
-        cout << endl;
-    } else {
-        cout << endl << "There is no expenses yet." << endl << endl;
-    }
+    displayOperations(incomes, "INCOMES");
+    displayOperations(expenses, "EXPENSES");
     system("pause");
 }
 
-
-void BudgetManager::addExpense() {
-    Operation expense;
-    system("cls");
-    cout << " >>> ADD EXPENSE <<<" << endl << endl;
-    cout << "-----------------------------------------------" << endl;
-    expense = getNewOperationDetails(Type::EXPENSE);
-    expenses.push_back(expense);
-    if(expenseFile.addOperationToFile(expense)) {
-        cout << "New expense has been added." << endl;
-    displayOperationData(expense);
-    } else
-        cout << "Error. Failed to add new expense." << endl;
-    system("pause");
-}
+string BudgetManager::typeToString(const Type &type) {
+        if (type == Type::INCOME)
+            return "INCOME";
+        return "EXPENSE";
+    }
 

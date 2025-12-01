@@ -5,7 +5,7 @@ bool CashMethods::isAmountValid(const string &amount) {
     istringstream iss(amount);
     double value;
     iss >> value;
-    // sprawdzamy czy ca³oœæ zosta³a poprawnie sparsowana
+    // sprawdzamy czy ca³oœæ zostala poprawnie sparsowana
     if (iss.fail() || !iss.eof()) {
         return false;
     }
