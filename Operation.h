@@ -13,7 +13,7 @@ struct Operation {
     int date;
     string item;
     double amount;
-    Type type = Type::INCOME;
+    Type type;
 
     Operation(): id(0) {}
 

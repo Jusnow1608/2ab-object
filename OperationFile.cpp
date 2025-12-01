@@ -7,13 +7,22 @@ bool OperationFile::addOperationToFile(const Operation &operation) {
     CMarkup xml;
 
     if (!xml.Load(getFileName())) {
-        xml.AddElem("incomes");
+        if (fileType == Type::INCOME)
+            xml.AddElem("incomes");
+        else
+            xml.AddElem("expenses");
+    }
+    if (fileType == Type::INCOME) {
+        xml.FindElem("incomes");
+        xml.IntoElem();
+        xml.AddElem("income");
+
+    } else {
+        xml.FindElem("expenses");
+        xml.IntoElem();
+        xml.AddElem("expense");
     }
 
-    xml.FindElem("incomes");
-    xml.IntoElem();
-
-    xml.AddElem("income");
     xml.IntoElem();
     xml.AddElem("id", operation.id);
     xml.AddElem("userId", operation.userId);
@@ -37,17 +46,35 @@ int OperationFile::getLastOperationId() const {
 
     if (!xml.Load(getFileName()))
         return lastOperationId;
-    if (!xml.FindElem("incomes"))
-        return lastOperationId;
+    if (fileType == Type::INCOME) {
+        if (!xml.FindElem("incomes"))
+            return lastOperationId;
 
-    xml.IntoElem();
-    while (xml.FindElem("income")) {
         xml.IntoElem();
-        if (xml.FindElem("id")) {
-            lastOperationId = stoi(xml.GetData());
+        while (xml.FindElem("income")) {
+            xml.IntoElem();
+            if (xml.FindElem("id")) {
+                lastOperationId = stoi(xml.GetData());
+            }
+            xml.OutOfElem();
         }
-        xml.OutOfElem();
     }
+    else {
+        if (!xml.FindElem("expenses"))
+            return lastOperationId;
 
+        xml.IntoElem();
+        while (xml.FindElem("expense")) {
+            xml.IntoElem();
+            if (xml.FindElem("id")) {
+                lastOperationId = stoi(xml.GetData());
+            }
+            xml.OutOfElem();
+        }
+    }
     return lastOperationId;
+}
+
+Type OperationFile::getFileType() const {
+    return fileType;
 }

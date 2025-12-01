@@ -29,8 +29,8 @@ class BudgetManager {
     //double calculateBalance(int startDate, int endDate, const Type &type);
 
 public:
-    BudgetManager(const string &incomeFile,const string &expenseFile, int loggedInUserId)
-        : incomeFile(incomeFile), expenseFile(expenseFile),LOGGED_IN_USER_ID(loggedInUserId) {}
+    BudgetManager(const string &incomeFileName,const string &expenseFileName, int loggedInUserId)
+        : incomeFile(incomeFileName, Type::INCOME), expenseFile(expenseFileName, Type::EXPENSE),LOGGED_IN_USER_ID(loggedInUserId) {}
 
     void addIncome();
     void addExpense();

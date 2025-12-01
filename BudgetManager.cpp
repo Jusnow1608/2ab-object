@@ -124,11 +124,11 @@ void BudgetManager::addExpense() {
     cout << "-----------------------------------------------" << endl;
     expense = getNewOperationDetails(Type::EXPENSE);
     expenses.push_back(expense);
-    // if(expenseFile.addOperationToFile(expense)) {
-    //    cout << "New expense has been added." << endl;
+    if(expenseFile.addOperationToFile(expense)) {
+        cout << "New expense has been added." << endl;
     displayOperationData(expense);
-    //} else
-    //    cout << "Error. Failed to add new expense." << endl;
+    } else
+        cout << "Error. Failed to add new expense." << endl;
     system("pause");
 }
 
