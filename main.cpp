@@ -9,14 +9,10 @@ int main() {
     //budgetMainApp.registerUser();
     //User user(1,"dastin","1234","Justyna", "Nowak-Szrajnert")
     budgetMainApp.loginUser();
-    budgetMainApp.addIncome();
-    budgetMainApp.addIncome();
-    budgetMainApp.addExpense();
-    budgetMainApp.addExpense();
+    //budgetMainApp.addIncome();
+    //budgetMainApp.addExpense();
     budgetMainApp.displayAllOperations();
-    budgetMainApp.addIncome();
-    budgetMainApp.addExpense();
-    budgetMainApp.displayAllOperations();
+
     //budgetMainApp.addIncome();
     //budgetMainApp.changeLoggedInUserPassword();
     //budgetMainApp.displayAllUsers();

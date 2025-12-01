@@ -3,8 +3,6 @@
 #include <iostream>
 
 
-
-
 void UserFile::addUserToFile(const User &user) {
     CMarkup xml;
 

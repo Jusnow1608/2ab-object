@@ -78,3 +78,46 @@ int OperationFile::getLastOperationId() const {
 Type OperationFile::getFileType() const {
     return fileType;
 }
+
+void OperationFile::loadOperationsFromFile(vector<Operation> &operations) {
+    operations.clear();
+    CMarkup xml;
+
+    if (!xml.Load(getFileName())) {
+        cerr << "Error: cannot open file: " << getFileName() << endl;
+        return;
+    }
+
+    string root, element;
+    if (fileType == Type::INCOME) {
+        root = "incomes";
+        element = "income";
+    } else {
+        root = "expenses";
+        element = "expense";
+    }
+
+    if (!xml.FindElem(root)) {
+        cerr << "Error: missing root element " << root << endl;
+        return;
+    }
+    xml.IntoElem();
+
+    while (xml.FindElem(element)) {
+        xml.IntoElem();
+
+        Operation op;
+        if (xml.FindElem("id")) op.id = stoi(xml.GetData());
+        if (xml.FindElem("userId")) op.userId = stoi(xml.GetData());
+        if (xml.FindElem("date")) op.date = stoi(xml.GetData());
+        if (xml.FindElem("item")) op.item = xml.GetData();
+        if (xml.FindElem("amount")) op.amount = stod(xml.GetData());
+
+        operations.push_back(op);
+
+        xml.OutOfElem();
+    }
+}
+
+
+

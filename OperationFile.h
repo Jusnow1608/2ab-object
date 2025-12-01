@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
     int getLastOperationId() const;
     void loadOperationsFromFile();
     Type getFileType() const;
+    void loadOperationsFromFile(vector<Operation> &operations);
 };
 
 #endif

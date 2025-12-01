@@ -24,7 +24,7 @@ void BudgetMainApp::logoutUser() {
 }
 
 void BudgetMainApp::addIncome() {
-    budgetManager->addIncome();
+    budgetManager->addOperation(Type::INCOME);
 }
 
 bool BudgetMainApp::isUserLoggedIn() {
@@ -35,7 +35,7 @@ bool BudgetMainApp::isUserLoggedIn() {
 }
 
 void BudgetMainApp::addExpense() {
-    budgetManager->addExpense();
+    budgetManager->addOperation(Type::EXPENSE);
 }
 
 void BudgetMainApp::displayAllOperations()
