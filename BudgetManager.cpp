@@ -1,33 +1,29 @@
 #include "BudgetManager.h"
 
-#include <iostream>
-
 void BudgetManager::addOperation(const Type &type) {
     system("cls");
-    cout << " >>> ADD "<<typeToString(type) <<"<<<" << endl << endl;
-    cout << "-----------------------------------------------" << endl;
+    cout << "                    >>> ADD "<<typeToString(type) <<" <<<    " << endl;
+    cout << "-------------------------------------------------------------" << endl;
+
     Operation operation = getNewOperationDetails(type);
 
-    if (type == Type::INCOME) {
-        incomes.push_back(operation);
-        if(incomeFile.addOperationToFile(operation)) {
-            cout << "New income has been added." << endl;
-            displayOperationData(operation);
-        } else
-            cout << "Error. Failed to add new income." << endl;
-        system("pause");
-    }
-
-    else {
-        expenses.push_back(operation);
-        if(expenseFile.addOperationToFile(operation)) {
-            cout << "New expense has been added." << endl;
-            displayOperationData(operation);
-        } else
-            cout << "Error. Failed to add new expense." << endl;
-        system("pause");
-    }
+    if (type == Type::INCOME)
+        processOperation(incomes, incomeFile, operation, "New income has been added.", "Error. Failed to add new income.");
+    else
+        processOperation(expenses, expenseFile, operation, "New expense has been added.", "Error. Failed to add new expense.");
 }
+
+void BudgetManager::processOperation(vector<Operation> &operations, OperationFile &file, const Operation &operation, const string &successMsg, const string &errorMsg) {
+    operations.push_back(operation);
+    if (file.addOperationToFile(operation)) {
+        cout <<endl<< successMsg << endl;
+        displayOperationData(operation);
+    } else {
+        cout <<endl<< errorMsg << endl;
+    }
+    system("pause");
+}
+
 
 Operation BudgetManager::getNewOperationDetails(const Type &type) {
     Operation operation;
@@ -43,21 +39,7 @@ Operation BudgetManager::getNewOperationDetails(const Type &type) {
 
         operation.date = DateMethods::getCurrentDate();
     else {
-        string dateString;
-        do {
-            dateString =  readNewValue("Please provide date (YYYY-MM-DD): ");
-            if(!DateMethods::isDateValid(dateString)) {
-                cout<<"Invalid date format. " << endl;
-                dateString.clear();
-                continue;
-            }
-            if (!DateMethods::isDateInRange(dateString)) {
-                string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
-                cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
-                dateString.clear();
-                continue;
-            }
-        } while (dateString.empty());
+        string dateString = readValidDate("Please provide date (YYYY-MM-DD): ");
 
         operation.date = DateMethods::formatStringDateToInt(dateString);
     }
@@ -73,13 +55,13 @@ Operation BudgetManager::getNewOperationDetails(const Type &type) {
             cout << "Invalid amount. " << endl;
             amount.clear();
         }
-
     } while (amount.empty());
 
     operation.amount = stod(amount);
 
     return operation;
 }
+
 
 string BudgetManager::readNewValue(const string &message) {
     string value;
@@ -92,31 +74,41 @@ string BudgetManager::readNewValue(const string &message) {
     return value;
 }
 
+
 void BudgetManager::displayOperationData(const Operation & operation) {
-    cout <<endl << "Id:        " << operation.id << endl;
-    cout << "UserId:    " << operation.userId << endl;
-    cout << "Date:      " << operation.date<< endl;
-    cout << "Item:      " << operation.item << endl;
-    cout << "Amount:    " << operation.amount << endl;
-
+    cout <<endl<< left << setw(22) << "Date"
+         << left << setw(13) << "Item"
+         << right << setw(15) << "Amount" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << left << setw(22) << DateMethods::intDateToString(operation.date)
+         << left << setw(13) << operation.item
+         << right << setw(15) << fixed << setprecision(2) << operation.amount << endl;
+    cout << "-------------------------------------------------------------" << endl << endl;
 }
 
-void BudgetManager::displayOperation(const Operation & operation) {
-    cout <<endl << "Date:      " << operation.date<< ", Amount:    " << operation.amount << endl;
-}
 
 void BudgetManager::displayOperations(const vector<Operation> &operations, const string &title) {
     if (!operations.empty()) {
-        cout << "             >>> " << title << " <<<" << endl;
-        cout << "-----------------------------------------------" << endl;
-        for (size_t i=0; i<operations.size(); i++) {
-            displayOperationData(operations[i]);
+        cout << "                     >>> " << title << " <<<                 " << endl;
+        cout << "-------------------------------------------------------------" << endl;
+        cout << left << setw(12) << "Date"
+             << setw(25) << "Item"
+             << right << setw(10) << "Amount" << endl;
+        cout << "-------------------------------------------------------------" << endl;
+
+        for (size_t i = 0; i< operations.size(); i++) {
+            cout << left << setw(12) << DateMethods::intDateToString(operations[i].date)
+                 << setw(25) << operations[i].item
+                 << right << setw(10) << fixed << setprecision(2) << operations[i].amount << endl;
         }
-        cout << endl;
+
+        cout << "-------------------------------------------------------------" << endl << endl;
     } else {
         cout << endl << "There is no " << title << " yet." << endl << endl;
     }
+
 }
+
 
 void BudgetManager::displayAllOperations() {
     system("cls");
@@ -125,11 +117,13 @@ void BudgetManager::displayAllOperations() {
     system("pause");
 }
 
+
 string BudgetManager::typeToString(const Type &type) {
     if (type == Type::INCOME)
         return "INCOME";
     return "EXPENSE";
 }
+
 
 double BudgetManager::calculateOperationsSum(const vector<Operation> &operations) {
     double sum = 0.0;
@@ -145,95 +139,113 @@ void BudgetManager::sortOperationsByDate(vector<Operation> &operations) {
     [](const Operation &a, const Operation &b) {
         return a.date < b.date; // najstarsze pierwsze
     });
+}
+double BudgetManager::displayBalanceForType(int startDate, int endDate, const Type &type) {
+    const vector<Operation> &operations = getOperationsByType(type);
 
+    vector<Operation> sortedOperations = operations;
+    sortOperationsByDate(sortedOperations);
+    vector<Operation> filteredOperations = filterOperationsByDate(sortedOperations, startDate, endDate);
+
+    displayOperations(filteredOperations, typeToString(type));
+
+    return calculateOperationsSum(filteredOperations);
 }
 
+
 void BudgetManager::displayBalance(int startDate, int endDate) {
-    system("cls");
-    sortOperationsByDate(incomes);
-    sortOperationsByDate(expenses);
+    double sumIncomes = displayBalanceForType(startDate, endDate, Type::INCOME);
+    double sumExpenses = displayBalanceForType(startDate, endDate, Type::EXPENSE);
+    double balance = sumIncomes - sumExpenses;
 
-    vector <Operation> filteredIncomes;
-    vector <Operation> filteredExpenses;
-
-    for (size_t i = 0; i<incomes.size(); i++) {
-        if (incomes[i].date>=startDate && incomes[i].date<=endDate) {
-            filteredIncomes.push_back(incomes[i]);
-        }
-    }
-    for (size_t i = 0; i<expenses.size(); i++) {
-        if (expenses[i].date>=startDate && expenses[i].date<=endDate) {
-            filteredExpenses.push_back(expenses[i]);
-        }
-    }
-
-    displayOperations(filteredIncomes, "INCOMES");
-    displayOperations(filteredExpenses, "EXPENSES");
-
-    double sumIncomes = calculateOperationsSum(filteredIncomes);
-    double sumExpenses = calculateOperationsSum(filteredExpenses);
-    double balance = sumIncomes-sumExpenses;
-    cout << "-----------------------------------------------" << endl;
-    cout << "Total incomes:  " << sumIncomes << endl;
-    cout << "Total expenses: " << sumExpenses << endl;
-
-    if (balance >= 0)
-        cout << "You saved:      " << balance << endl;
-    else
-        cout << "You are in debt: " << balance << endl;
-
+    cout <<endl<< "                     >>> BALANCE <<<                         " << endl;
+    cout << "-------------------------------------------------------------"  << endl;
+    cout << "Total INCOME:  " << sumIncomes << endl;
+    cout << "Total EXPENSE: " << sumExpenses << endl;
+    cout << "Total BALANCE: " << balance << endl;
     system("pause");
+}
 
+double BudgetManager::calculateBalanceForType(int startDate, int endDate, const Type &type) {
+    const vector<Operation> &source = getOperationsByType(type);
+    vector<Operation> filtered = filterOperationsByDate(source, startDate, endDate);
+    return calculateOperationsSum(filtered);
+}
+
+double BudgetManager::calculateBalance(int startDate, int endDate) {
+    double sumIncomes  = calculateBalanceForType(startDate, endDate, Type::INCOME);
+    double sumExpenses = calculateBalanceForType(startDate, endDate, Type::EXPENSE);
+    return sumIncomes - sumExpenses;
+}
+
+
+const vector<Operation>& BudgetManager::getOperationsByType(const Type &type) const {
+    if (type == Type::INCOME)
+        return incomes;
+    else
+        return expenses;
+}
+
+
+vector<Operation> BudgetManager::filterOperationsByDate(const vector<Operation> &operations, int startDate, int endDate) {
+    vector<Operation> filteredOperations;
+    for (size_t i = 0; i<operations.size(); i++) {
+        if (operations[i].date >= startDate && operations[i].date <= endDate)
+            filteredOperations.push_back(operations[i]);
+    }
+    return filteredOperations;
 }
 
 void BudgetManager::displayCurrentMonthBalance() {
+    system("cls");
+    cout << "                  >>> CURRENT MONTH BALANCE <<<              " << endl;
+    cout << "-------------------------------------------------------------"  << endl<<endl;
     int startDate = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthFirstDay());
     int endDate   = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthLastDay());
-    displayBalance(startDate, endDate);
 
+    displayBalance(startDate, endDate);
 }
 void BudgetManager::displayPreviousMonthBalance() {
+    system("cls");
+    cout << "                 >>> PREVIOUS MONTH BALANCE <<<              " << endl;
+    cout << "-------------------------------------------------------------"  << endl<<endl;
     int startDate = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthFirstDay());
     int endDate   = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthLastDay());
+
     displayBalance(startDate, endDate);
 }
 
 
 void BudgetManager::displaySelectedPeriodBalance() {
-    string startDateString, endDateString;
-    do {
-        startDateString =  readNewValue("Please provide  start date (YYYY-MM-DD): ");
-        if(!DateMethods::isDateValid(startDateString)) {
-            cout<<"Invalid date format. " << endl;
-            startDateString.clear();
-            continue;
-        }
-        if (!DateMethods::isDateInRange(startDateString)) {
-            string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
-            cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
-            startDateString.clear();
-            continue;
-        }
-    } while (startDateString.empty());
-
-    do {
-        endDateString =  readNewValue("Please provide  end date (YYYY-MM-DD): ");
-        if(!DateMethods::isDateValid(endDateString)) {
-            cout<<"Invalid date format. " << endl;
-            endDateString.clear();
-            continue;
-        }
-        if (!DateMethods::isDateInRange(endDateString)) {
-            string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
-            cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
-            endDateString.clear();
-            continue;
-        }
-    } while (endDateString.empty());
+    system("cls");
+    cout << "               >>> BALANCE IN SELECTED PERIOD <<<            " << endl;
+    cout << "-------------------------------------------------------------"  << endl;
+    string startDateString = readValidDate("Please provide start date (YYYY-MM-DD): ");
+    string endDateString   = readValidDate("Please provide end date (YYYY-MM-DD): ");
 
     int startDate = DateMethods::formatStringDateToInt(startDateString);
     int endDate = DateMethods::formatStringDateToInt(endDateString);
+
     displayBalance(startDate, endDate);
 }
 
+
+string BudgetManager::readValidDate(const string &message) {
+    string dateString;
+    do {
+        dateString = readNewValue(message);
+        if (!DateMethods::isDateValid(dateString)) {
+            cout << "Invalid date format." << endl;
+            dateString.clear();
+            continue;
+        }
+        if (!DateMethods::isDateInRange(dateString)) {
+            string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
+            cout << "Date must be between 2000-01-01 and " + currentMonthLastDay + "." << endl;
+            dateString.clear();
+            continue;
+        }
+    } while (dateString.empty());
+    return dateString;
+}
 

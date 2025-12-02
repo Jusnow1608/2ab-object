@@ -11,7 +11,7 @@ int main() {
     budgetMainApp.loginUser();
     budgetMainApp.addIncome();
     budgetMainApp.addExpense();
-    budgetMainApp.displayAllOperations();
+    //budgetMainApp.displayAllOperations();
     budgetMainApp.displayCurrentMonthBalance();
     budgetMainApp.displayPreviousMonthBalance();
     budgetMainApp.displaySelectedPeriodBalance();
