@@ -21,7 +21,6 @@ public:
 
     bool addOperationToFile(const Operation &operation);
     int getLastOperationId() const;
-    void loadOperationsFromFile();
     Type getFileType() const;
     void loadOperationsFromFile(vector<Operation> &operations);
 };
@@ -31,9 +30,6 @@ public:
     void saveTransactionToFile(const Transaction& transaction, const string& filename);
     void displayAllTransactions() const;
     void displayTransactionsByDate(const string& datePrefix) const;
-    void displayTransactionsByAmount(double threshold, const string& condition) const
-
-+ getTransactionsForLoggedInUser(): vector <Operation>
-
+    void displayTransactionsByAmount(double threshold, const string& condition) const;
 */
 

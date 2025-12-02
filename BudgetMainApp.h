@@ -39,12 +39,13 @@ public:
     bool isUserLoggedIn();
     void addExpense();
     void displayAllOperations();
-    /*
-    char getMainMenuSelection();
-    char getUserMenuSelection();
     void displayCurrentMonthBalance();
     void displayPreviousMonthBalance();
     void displaySelectedPeriodBalance();
+    /*
+    char getMainMenuSelection();
+    char getUserMenuSelection();
+
     */
 };
 

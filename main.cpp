@@ -9,10 +9,12 @@ int main() {
     //budgetMainApp.registerUser();
     //User user(1,"dastin","1234","Justyna", "Nowak-Szrajnert")
     budgetMainApp.loginUser();
-    //budgetMainApp.addIncome();
-    //budgetMainApp.addExpense();
+    budgetMainApp.addIncome();
+    budgetMainApp.addExpense();
     budgetMainApp.displayAllOperations();
-
+    budgetMainApp.displayCurrentMonthBalance();
+    budgetMainApp.displayPreviousMonthBalance();
+    budgetMainApp.displaySelectedPeriodBalance();
     //budgetMainApp.addIncome();
     //budgetMainApp.changeLoggedInUserPassword();
     //budgetMainApp.displayAllUsers();
@@ -27,6 +29,16 @@ int main() {
 #include "UserManager.h"
 int UserManager_main() {
     UserManager userManager ("users.xml");
+    //cout<<userManager.generateNewUserId()<<endl;
+    //userManager.getNewUserDetails();
+    //userManager.displayAllUsers();
+
+    return 0;
+}
+
+#include "BudgetManager.h"
+int BudgetManager_main() {
+    BudgetManager budgetManager ("incomes.xml","expenses.xml", 1);
     //cout<<userManager.generateNewUserId()<<endl;
     //userManager.getNewUserDetails();
     //userManager.displayAllUsers();

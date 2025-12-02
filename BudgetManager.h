@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <algorithm>
 
 #include "OperationFile.h"
 #include "Operation.h"
@@ -27,35 +28,30 @@ class BudgetManager {
     void displayOperations(const vector<Operation> &operations, const string &title);
     void displayOperationData(const Operation & operation);
     string typeToString(const Type &type);
-    //void displayBalance(int startDate, int endDate);
+
+    double calculateOperationsSum(const vector<Operation> &operations);
+    void sortOperationsByDate(vector<Operation> &operations);
+    void displayBalance(int startDate, int endDate);
+    void displayOperation(const Operation & operation);
     //double calculateBalance(int startDate, int endDate, const Type &type);
 
 public:
     BudgetManager(const string &incomeFileName,const string &expenseFileName, int loggedInUserId)
         : incomeFile(incomeFileName, Type::INCOME), expenseFile(expenseFileName, Type::EXPENSE),LOGGED_IN_USER_ID(loggedInUserId) {
         incomeFile.loadOperationsFromFile(incomes);
-       expenseFile.loadOperationsFromFile(expenses);
+        expenseFile.loadOperationsFromFile(expenses);
 
     }
 
     void addOperation(const Type &type);
     void displayAllOperations();
+    void displayCurrentMonthBalance();
+    void displayPreviousMonthBalance();
+    void displaySelectedPeriodBalance();
 };
-
-
 /*
-void displayCurrentMonthBalance();
-void displayPreviousMonthBalance();
-void displaySelectedPeriodBalance();
-};
-- expenseFileName: string
-- incomeFileName: string
-+
 + displayOperationsByDate(): void
 + displayOperationsByAmount(): void
 
-
-- sumOperations(): void
-- sortByDateAscending(): void
 */
 #endif
