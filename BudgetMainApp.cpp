@@ -38,8 +38,19 @@ void BudgetMainApp::addExpense() {
     budgetManager->addOperation(Type::EXPENSE);
 }
 
-void BudgetMainApp::displayAllOperations()
-{
-  budgetManager->displayAllOperations();
+void BudgetMainApp::displayAllOperations() {
+    budgetManager->displayAllOperations();
+}
+
+void BudgetMainApp::displayCurrentMonthBalance() {
+    budgetManager->displayCurrentMonthBalance();
+}
+
+void BudgetMainApp::displayPreviousMonthBalance() {
+    budgetManager->displayPreviousMonthBalance();
+}
+
+void BudgetMainApp::displaySelectedPeriodBalance() {
+    budgetManager->displaySelectedPeriodBalance();
 }
 

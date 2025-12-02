@@ -101,6 +101,10 @@ void BudgetManager::displayOperationData(const Operation & operation) {
 
 }
 
+void BudgetManager::displayOperation(const Operation & operation) {
+    cout <<endl << "Date:      " << operation.date<< ", Amount:    " << operation.amount << endl;
+}
+
 void BudgetManager::displayOperations(const vector<Operation> &operations, const string &title) {
     if (!operations.empty()) {
         cout << "             >>> " << title << " <<<" << endl;
@@ -122,8 +126,114 @@ void BudgetManager::displayAllOperations() {
 }
 
 string BudgetManager::typeToString(const Type &type) {
-        if (type == Type::INCOME)
-            return "INCOME";
-        return "EXPENSE";
+    if (type == Type::INCOME)
+        return "INCOME";
+    return "EXPENSE";
+}
+
+double BudgetManager::calculateOperationsSum(const vector<Operation> &operations) {
+    double sum = 0.0;
+    for (size_t i = 0; i < operations.size(); i++) {
+        sum += operations[i].amount;
     }
+    return sum;
+}
+
+
+void BudgetManager::sortOperationsByDate(vector<Operation> &operations) {
+    sort(operations.begin(), operations.end(),
+    [](const Operation &a, const Operation &b) {
+        return a.date < b.date; // najstarsze pierwsze
+    });
+
+}
+
+void BudgetManager::displayBalance(int startDate, int endDate) {
+    system("cls");
+    sortOperationsByDate(incomes);
+    sortOperationsByDate(expenses);
+
+    vector <Operation> filteredIncomes;
+    vector <Operation> filteredExpenses;
+
+    for (size_t i = 0; i<incomes.size(); i++) {
+        if (incomes[i].date>=startDate && incomes[i].date<=endDate) {
+            filteredIncomes.push_back(incomes[i]);
+        }
+    }
+    for (size_t i = 0; i<expenses.size(); i++) {
+        if (expenses[i].date>=startDate && expenses[i].date<=endDate) {
+            filteredExpenses.push_back(expenses[i]);
+        }
+    }
+
+    displayOperations(filteredIncomes, "INCOMES");
+    displayOperations(filteredExpenses, "EXPENSES");
+
+    double sumIncomes = calculateOperationsSum(filteredIncomes);
+    double sumExpenses = calculateOperationsSum(filteredExpenses);
+    double balance = sumIncomes-sumExpenses;
+    cout << "-----------------------------------------------" << endl;
+    cout << "Total incomes:  " << sumIncomes << endl;
+    cout << "Total expenses: " << sumExpenses << endl;
+
+    if (balance >= 0)
+        cout << "You saved:      " << balance << endl;
+    else
+        cout << "You are in debt: " << balance << endl;
+
+    system("pause");
+
+}
+
+void BudgetManager::displayCurrentMonthBalance() {
+    int startDate = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthFirstDay());
+    int endDate   = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthLastDay());
+    displayBalance(startDate, endDate);
+
+}
+void BudgetManager::displayPreviousMonthBalance() {
+    int startDate = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthFirstDay());
+    int endDate   = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthLastDay());
+    displayBalance(startDate, endDate);
+}
+
+
+void BudgetManager::displaySelectedPeriodBalance() {
+    string startDateString, endDateString;
+    do {
+        startDateString =  readNewValue("Please provide  start date (YYYY-MM-DD): ");
+        if(!DateMethods::isDateValid(startDateString)) {
+            cout<<"Invalid date format. " << endl;
+            startDateString.clear();
+            continue;
+        }
+        if (!DateMethods::isDateInRange(startDateString)) {
+            string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
+            cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
+            startDateString.clear();
+            continue;
+        }
+    } while (startDateString.empty());
+
+    do {
+        endDateString =  readNewValue("Please provide  end date (YYYY-MM-DD): ");
+        if(!DateMethods::isDateValid(endDateString)) {
+            cout<<"Invalid date format. " << endl;
+            endDateString.clear();
+            continue;
+        }
+        if (!DateMethods::isDateInRange(endDateString)) {
+            string currentMonthLastDay = DateMethods::getCurrentMonthLastDay();
+            cout <<"Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
+            endDateString.clear();
+            continue;
+        }
+    } while (endDateString.empty());
+
+    int startDate = DateMethods::formatStringDateToInt(startDateString);
+    int endDate = DateMethods::formatStringDateToInt(endDateString);
+    displayBalance(startDate, endDate);
+}
+
 

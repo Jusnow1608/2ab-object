@@ -34,6 +34,7 @@ public:
     static string getPreviousMonthFirstDay();
     static string getPreviousMonthLastDay();
     static string getCurrentMonthLastDay();
+    static string getCurrentMonthFirstDay();
 
     // Walidacja i porównania
     static bool isInPreviousMonth(const string& date);

@@ -113,6 +113,14 @@ string DateMethods::getPreviousMonthLastDay() {
 }
 
 
+string DateMethods::getCurrentMonthFirstDay() {
+    tm date = getNow();
+    date.tm_mday = 1;
+    mktime(&date);
+    string dt = tmToString(date);
+    return dt;
+}
+
 string DateMethods::getCurrentMonthLastDay() {
     tm date = getNow();
     date.tm_mon += 1;
