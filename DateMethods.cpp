@@ -16,8 +16,22 @@ string DateMethods::formatIntDateToString(int year, int month, int day) {
     return ss.str();
 }
 
+string DateMethods::intDateToString(int date) {
+
+    int year  = date / 10000;
+    int month = (date / 100) % 100;
+    int day   = date % 100;
+
+    ostringstream oss;
+    oss << setw(4) << setfill('0') << year << "-"
+        << setw(2) << setfill('0') << month << "-"
+        << setw(2) << setfill('0') << day;
+
+    return oss.str();
+}
+
+
 int DateMethods::formatStringDateToInt(const string& date) {
-    // Sprawdzenie dlugosci i separatorów
     if (date.size() != 10 || date[4] != '-' || date[7] != '-') {
         throw invalid_argument("Invalid date format. Expected YYYY-MM-DD.");
     }
@@ -27,7 +41,7 @@ int DateMethods::formatStringDateToInt(const string& date) {
     string day = date.substr(8, 2);
 
     string intDate = year + month + day;
-    // Konwersja na int
+
     return stoi(intDate);
 }
 string DateMethods::tmToString(const tm& date) {

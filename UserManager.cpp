@@ -1,8 +1,8 @@
 #include "UserManager.h"
 
 void UserManager::registerUser() {
-    cout << "             >>> REGISTRATION <<<" << endl;
-    cout << "-----------------------------------------------" << endl;
+    cout << "                      >>> REGISTRATION <<<                   " << endl;
+    cout << "-------------------------------------------------------------" << endl;
     User user = getNewUserDetails();
 
     users.push_back(user);
@@ -83,8 +83,8 @@ void UserManager::displayAllUsers() const {
 
 void UserManager::loginUser() {
     const int MAX_ATTEMPTS = 3;
-    cout << "             >>> LOGIN <<<" << endl;
-    cout << "-----------------------------------------------" << endl;
+    cout << "                           >>> LOGIN <<<                     " << endl;
+    cout << "-------------------------------------------------------------" << endl;
     cout << "Please provide login: ";
     string login = AuxiliaryMethods::readLine();
 
@@ -112,8 +112,8 @@ void UserManager::loginUser() {
 }
 
 void UserManager::changeLoggedInUserPassword() {
-    cout << "             >>> CHANGE PASSWORD <<<" << endl;
-    cout << "-----------------------------------------------" << endl;
+    cout << "                   >>> CHANGE PASSWORD <<<                   " << endl;
+    cout << "-------------------------------------------------------------" << endl;
     string newPassword = "";
     while (newPassword.empty()) {
         cout << "Please provide new password: ";
@@ -166,4 +166,3 @@ int UserManager::getLoggedInUserId()
 {
     return loggedInUserId;
 }
-//void findUserByLogin(const string &login, vector <Users>::iterator &itr);

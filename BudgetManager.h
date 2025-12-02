@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <iostream>
 
 #include "OperationFile.h"
 #include "Operation.h"
@@ -28,13 +29,18 @@ class BudgetManager {
     void displayOperations(const vector<Operation> &operations, const string &title);
     void displayOperationData(const Operation & operation);
     string typeToString(const Type &type);
-
     double calculateOperationsSum(const vector<Operation> &operations);
     void sortOperationsByDate(vector<Operation> &operations);
     void displayBalance(int startDate, int endDate);
     void displayOperation(const Operation & operation);
-    //double calculateBalance(int startDate, int endDate, const Type &type);
+    void processOperation(vector<Operation> &operations, OperationFile &file, const Operation &operation, const string &successMsg, const string &errorMsg);
+    double calculateBalance(int startDate, int endDate);
+    double calculateBalanceForType(int startDate, int endDate, const Type &type);
+    double displayBalanceForType(int startDate, int endDate, const Type &type);
 
+string readValidDate(const string &message);
+const vector<Operation>& getOperationsByType(const Type &type) const;
+vector<Operation> filterOperationsByDate(const vector<Operation> &operations, int startDate, int endDate);
 public:
     BudgetManager(const string &incomeFileName,const string &expenseFileName, int loggedInUserId)
         : incomeFile(incomeFileName, Type::INCOME), expenseFile(expenseFileName, Type::EXPENSE),LOGGED_IN_USER_ID(loggedInUserId) {
@@ -49,9 +55,4 @@ public:
     void displayPreviousMonthBalance();
     void displaySelectedPeriodBalance();
 };
-/*
-+ displayOperationsByDate(): void
-+ displayOperationsByAmount(): void
-
-*/
 #endif

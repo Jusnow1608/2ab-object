@@ -16,6 +16,7 @@ public:
     // Konwersje dat
     static string formatIntDateToString(int year, int month, int day);
     static int formatStringDateToInt(const string& stringDate);
+    static string intDateToString(int date);
 
     // Pomocnicze konwersje tm
     static string tmToString(const tm& date);
