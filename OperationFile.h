@@ -22,14 +22,8 @@ public:
     bool addOperationToFile(const Operation &operation);
     int getLastOperationId() const;
     Type getFileType() const;
-    void loadOperationsFromFile(vector<Operation> &operations);
+    void loadOperationsFromFile(vector<Operation> &operations, int loggedInUserId);
 };
-
 #endif
-/*
-    void saveTransactionToFile(const Transaction& transaction, const string& filename);
-    void displayAllTransactions() const;
-    void displayTransactionsByDate(const string& datePrefix) const;
-    void displayTransactionsByAmount(double threshold, const string& condition) const;
-*/
+
 

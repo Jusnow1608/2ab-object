@@ -2,7 +2,7 @@
 
 void UserManager::registerUser() {
     system ("cls");
-    cout << "                      >>> REGISTRATION <<<                   " << endl;
+    cout << "                        >>> REGISTER <<<                     " << endl;
     cout << "-------------------------------------------------------------" << endl;
     User user = getNewUserDetails();
 
@@ -70,18 +70,6 @@ bool UserManager::doesLoginExist(const string &login) const {
     return false;
 }
 
-void UserManager::displayAllUsers() const {
-    for (size_t i=0; i<users.size(); i++) {
-        cout << "Id:       "<<users[i].userId << endl;
-        cout << "Login:    "<<users[i].login << endl;
-        cout << "Password: "<<users[i].password << endl;
-        cout << "Name:     "<<users[i].name << endl;
-        cout << "Surname:  "<<users[i].surname << endl;
-        cout << endl;
-    }
-    system ("pause");
-}
-
 void UserManager::loginUser() {
     system ("cls");
     const int MAX_ATTEMPTS = 3;
@@ -99,17 +87,17 @@ void UserManager::loginUser() {
 
                 if(users[i].password == password) {
                     loggedInUserId = users[i].userId;
-                    cout << endl << "You have logged in." << endl << endl;
+                    cout << endl << "You have successfully logged in." << endl << endl;
                     system("pause");
                     return;
                 }
             }
-            cout << "You entered an incorrect password "<<MAX_ATTEMPTS<<" times." << endl;
+            cout << "You entered an incorrect password "<<MAX_ATTEMPTS<<" times. " << endl;
             system("pause");
             return;
         }
     }
-    cout << "There is no user with this login." << endl << endl;
+    cout << "There is no user with this login. " << endl << endl;
     system("pause");
 }
 
@@ -122,14 +110,14 @@ void UserManager::changeLoggedInUserPassword() {
         cout << "Please provide new password: ";
         newPassword = AuxiliaryMethods::readLine();
         if (newPassword.empty())
-            cout << "Password cannot be empty." << endl;
+            cout << "Password cannot be empty. ";
     }
     try {
         User& user = findUserById(loggedInUserId);
         user.password = newPassword;
 
         if (userFile.changePasswordInFile(loggedInUserId, newPassword)) {
-            cout << "The password has been changed." << endl << endl;
+            cout << endl << "Your password has been successfully changed." << endl << endl;
         } else {
             cerr << "Failed to update password in file." << endl;
         }
@@ -150,8 +138,8 @@ User& UserManager::findUserById(int userId) {
 
 void UserManager::logoutUser() {
     loggedInUserId = 0;
-    cout<<"You have been logged out."<<endl;
-    //system("pause");
+    cout<<"You have been successfully logged out."<<endl;
+    system("pause");
 }
 
 bool UserManager::isUserLoggedIn() {

@@ -4,10 +4,6 @@ void BudgetMainApp::registerUser() {
     userManager.registerUser();
 }
 
-void BudgetMainApp::displayAllUsers() {
-    userManager.displayAllUsers();
-}
-
 void BudgetMainApp::loginUser() {
     userManager.loginUser();
     if (isUserLoggedIn()) {
@@ -28,18 +24,11 @@ void BudgetMainApp::addIncome() {
 }
 
 bool BudgetMainApp::isUserLoggedIn() {
-    if (userManager.isUserLoggedIn())
-        return true;
-    else
-        return false;
+    return userManager.isUserLoggedIn();
 }
 
 void BudgetMainApp::addExpense() {
     budgetManager->addOperation(Type::EXPENSE);
-}
-
-void BudgetMainApp::displayAllOperations() {
-    budgetManager->displayAllOperations();
 }
 
 void BudgetMainApp::displayCurrentMonthBalance() {
@@ -60,13 +49,17 @@ char BudgetMainApp::getMainMenuSelection() {
     system("cls");
     cout << "                      >>> MAIN MENU <<<                      " << endl;
     cout << "-------------------------------------------------------------" << endl;
-    cout << "1. Registration" << endl;
+    cout << "1. Register" << endl;
     cout << "2. Login" << endl;
-    cout << "9. Exit" << endl;
+    cout << "0. Exit" << endl;
     cout << "-------------------------------------------------------------" << endl;
     cout << "Your choice: ";
     choice = AuxiliaryMethods::readChar();
 
+    while (choice != '1' && choice != '2' && choice != '0') {
+        cout << "Invalid option. Please try again: ";
+        choice = AuxiliaryMethods::readChar();
+    }
     return choice;
 }
 char BudgetMainApp::getUserMenuSelection() {
@@ -79,7 +72,7 @@ char BudgetMainApp::getUserMenuSelection() {
     cout << "2. Add expense" << endl;
     cout << "3. Display current month balance" << endl;
     cout << "4. Display previous month balance" << endl;
-    cout << "5. Display custom balance" << endl;
+    cout << "5. Display balance for selected period" << endl;
     cout << "-------------------------------------------------------------" << endl;
     cout << "6. Change password" << endl;
     cout << "7. Logout" << endl;
@@ -87,6 +80,10 @@ char BudgetMainApp::getUserMenuSelection() {
     cout << "Your choice: ";
     choice = AuxiliaryMethods::readChar();
 
+   while (!(choice >= '0' && choice <= '7')) {
+        cout << "Invalid option. Please try again: ";
+        choice = AuxiliaryMethods::readChar();
+    }
     return choice;
 }
 

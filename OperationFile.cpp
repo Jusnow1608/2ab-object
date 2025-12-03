@@ -79,12 +79,12 @@ Type OperationFile::getFileType() const {
     return fileType;
 }
 
-void OperationFile::loadOperationsFromFile(vector<Operation> &operations) {
+void OperationFile::loadOperationsFromFile(vector<Operation> &operations, int loggedInUserId) {
     operations.clear();
     CMarkup xml;
 
     if (!xml.Load(getFileName())) {
-        cerr << "Error: cannot open file: " << getFileName() << endl;
+        cerr << "Error: cannot open file: " << getFileName() <<"."<< endl;
         return;
     }
 
@@ -98,7 +98,7 @@ void OperationFile::loadOperationsFromFile(vector<Operation> &operations) {
     }
 
     if (!xml.FindElem(root)) {
-        cerr << "Error: missing root element " << root << endl;
+        cerr << "Error: missing root element " << root <<"."<< endl;
         return;
     }
     xml.IntoElem();
@@ -106,15 +106,16 @@ void OperationFile::loadOperationsFromFile(vector<Operation> &operations) {
     while (xml.FindElem(element)) {
         xml.IntoElem();
 
-        Operation op;
-        if (xml.FindElem("id")) op.id = stoi(xml.GetData());
-        if (xml.FindElem("userId")) op.userId = stoi(xml.GetData());
-        if (xml.FindElem("date")) op.date = stoi(xml.GetData());
-        if (xml.FindElem("item")) op.item = xml.GetData();
-        if (xml.FindElem("amount")) op.amount = stod(xml.GetData());
+        Operation operation;
+        if (xml.FindElem("id")) operation.id = stoi(xml.GetData());
+        if (xml.FindElem("userId")) operation.userId = stoi(xml.GetData());
+        if (xml.FindElem("date")) operation.date = stoi(xml.GetData());
+        if (xml.FindElem("item")) operation.item = xml.GetData();
+        if (xml.FindElem("amount")) operation.amount = stod(xml.GetData());
 
-        operations.push_back(op);
-
+       if (operation.userId == loggedInUserId) {
+            operations.push_back(operation);
+        }
         xml.OutOfElem();
     }
 }

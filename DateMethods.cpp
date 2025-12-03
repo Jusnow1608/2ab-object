@@ -97,16 +97,6 @@ int DateMethods::getDaysInCurrentMonth() {
     return daysInCurrentMonth;
 }
 
-
-string DateMethods::getPreviousMonthDate() {
-    tm date = getNow();
-    date.tm_mon -= 1;
-    mktime(&date);
-    string dt = tmToString(date);
-    return dt;
-}
-
-
 string DateMethods::getPreviousMonthFirstDay() {
     tm date = getNow();
     date.tm_mon -= 1;
@@ -196,4 +186,21 @@ bool DateMethods::isDateInRange(const string &date) {
     return result;
 }
 
-
+string DateMethods::readValidDate(const string &message) {
+    string dateString;
+    do {
+        dateString = AuxiliaryMethods::readNewValue(message);
+        if (!isDateValid(dateString)) {
+            cout << "Invalid date format.";
+            dateString.clear();
+            continue;
+        }
+        if (!isDateInRange(dateString)) {
+            string currentMonthLastDay = getCurrentMonthLastDay();
+            cout << "Date must be between 2000-01-01 and " + currentMonthLastDay + ".";
+            dateString.clear();
+            continue;
+        }
+    } while (dateString.empty());
+    return dateString;
+}
