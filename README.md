@@ -115,7 +115,7 @@ Balance can be displayed for:
 Balance console output:
 
 ## UML Diagram
-The following UML diagram illustrates the main classes and their relationships:
+The following UML diagram was created using UMLet version 15.1 and illustrates the main classes and their relationships:
 UML Diagram
 
 ## Tests
