@@ -21,9 +21,6 @@ class UserManager {
     int generateNewUserId() const;
     User& findUserById(int userId);
 
-//void findUserByLogin(const string &login, vector <Users>::iterator &itr);
-
-
 public:
     UserManager(const string &userFileName): userFile(userFileName) {
         loggedInUserId = 0;
@@ -31,7 +28,6 @@ public:
     };
 
     void registerUser();
-    void displayAllUsers() const;
     void loginUser();
     void changeLoggedInUserPassword();
     void logoutUser();

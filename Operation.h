@@ -17,8 +17,8 @@ struct Operation {
 
     Operation(): id(0) {}
 
-    Operation(int id_, int userId_, const int& date_, const string& item_, double amount_)
-        : id(id_), userId(userId_), date(date_), item(item_), amount(amount_) {}
+    Operation(int id_, int userId_, const int& date_, const string& item_, double amount_, Type type_)
+        : id(id_), userId(userId_), date(date_), item(item_), amount(amount_), type(type_) {}
 
 };
 

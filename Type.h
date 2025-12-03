@@ -5,5 +5,4 @@ enum class Type {
     INCOME,
     EXPENSE
 };
-
 #endif

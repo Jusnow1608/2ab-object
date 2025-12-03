@@ -25,28 +25,18 @@ public:
         delete budgetManager;
         budgetManager = NULL;
     }
-    /*
-    BudgetMainApp(string nazwaPlikuZUzytkownikami, string nazwaPlikuZAdresatami, string nazwaTymczasowegoPlikuZAdresatami):
-        uzytkownikMenadzer (nazwaPlikuZUzytkownikami), NAZWA_PLIKU_Z_ADRESATAMI(nazwaPlikuZAdresatami), NAZWA_TYMCZASOWEGO_PLIKU_Z_ADRESATAMI(nazwaTymczasowegoPlikuZAdresatami) {
-        adresatMenadzer = NULL;
-    }
-     */
+
     void registerUser();
-    void displayAllUsers();
     void loginUser();
     void changeLoggedInUserPassword();
     void logoutUser();
     void addIncome();
     bool isUserLoggedIn();
     void addExpense();
-    void displayAllOperations();
     void displayCurrentMonthBalance();
     void displayPreviousMonthBalance();
     void displaySelectedPeriodBalance();
-    char wybierzOpcjeZMenuGlownego();
-    char wybierzOpcjeZMenuUzytkownika();
     char getMainMenuSelection();
     char getUserMenuSelection();
 };
-
 #endif

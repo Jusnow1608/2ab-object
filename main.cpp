@@ -18,8 +18,8 @@ int main() {
             case '2':
                 budgetMainApp.loginUser();
                 break;
-            case '9':
-                exit(0);
+            case '0':
+                return 0;
                 break;
             default:
                 cout << endl << "There is no such option in the menu." << endl << endl;
@@ -77,30 +77,7 @@ int BudgetManager_main() {
     return 0;
 }
 #include "DateMethods.h"
-int _main() { //dataDzisiejszaDniWMiesiacuRokPrzestepny
-
-    /*string data1 = formatIntDateToString(2015, 8, 4);
-    cout<<"Formatowanie daty z liczb: "<<data1<<endl;
-
-    bool przestepny = isLeapYear(2025);
-    cout<<"Czy rok jest przestepny? "<<przestepny<<endl;
-
-    int ileDni = getDaysInMonth(2025, 2);
-    cout<< "Ile dni bylo w lutym 2025 "<<ileDni<<endl;
-
-    string data2 = getPreviousMonthDate();
-    cout<<"Jaka data byla miesiac temu? "<<data2<<endl;
-
-
-    bool czyOK = isDateValid("2025-10-32");
-    cout<<"Czy data 2025-10-32 jest poprawna? "<<czyOK<<endl;
-
-    string today = getCurrentDate();
-    cout << "Dzisiejsza data: " << today << '\n';
-
-    int dni = getDaysInCurrentMonth();
-    cout << "Obecny miesiac ma " << dni << " dni\n";
-    */
+int _main() {
     string data = DateMethods::formatIntDateToString(2015, 8, 4);
     cout<<DateMethods::formatStringDateToInt (data);
     return 0;

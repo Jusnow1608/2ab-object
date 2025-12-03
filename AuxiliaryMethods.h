@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 
+#include "Type.h"
+
 using namespace std;
 
 class AuxiliaryMethods
@@ -13,14 +15,8 @@ public:
 
     static char readChar();
     static bool validateInput(string &input);
-
-    /*
-    static string capitalizeFirstLetter(string input);
-    static int readInteger();
-    static string readNumber(string tekst, int pozycjaZnaku);
-    static int convertStringToInt(string number);
-    static string convertIntToString(int number);
-    */
+    static string readNewValue(const string &message);
+    static string typeToString(const Type &type);
 
 };
 

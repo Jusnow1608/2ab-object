@@ -17,8 +17,26 @@ char AuxiliaryMethods::readChar() {
             sign = input[0];
             break;
         }
-        cout << "It is not a single sign. Provide again." << endl;
+        cout << "It is not a single sign. Please try again: ";
     }
     return sign;
 }
-//    bool validateInput(string input);
+
+string AuxiliaryMethods::readNewValue(const string &message) {
+    string value;
+    do {
+        cout << message;
+        value = readLine();
+        if(value.empty())
+            cout << "Value cannot be empty. " << endl;
+    } while (value.empty());
+    return value;
+}
+
+
+string AuxiliaryMethods::typeToString(const Type &type) {
+    if (type == Type::INCOME)
+        return "INCOME";
+    return "EXPENSE";
+}
+
