@@ -1,6 +1,7 @@
 #include "UserManager.h"
 
 void UserManager::registerUser() {
+    system ("cls");
     cout << "                      >>> REGISTRATION <<<                   " << endl;
     cout << "-------------------------------------------------------------" << endl;
     User user = getNewUserDetails();
@@ -8,7 +9,7 @@ void UserManager::registerUser() {
     users.push_back(user);
     userFile.addUserToFile(user);
 
-    cout << endl << "Account has been created successfully" << endl << endl;
+    cout << endl << "Account has been created successfully." << endl << endl;
     system("pause");
 }
 
@@ -82,6 +83,7 @@ void UserManager::displayAllUsers() const {
 }
 
 void UserManager::loginUser() {
+    system ("cls");
     const int MAX_ATTEMPTS = 3;
     cout << "                           >>> LOGIN <<<                     " << endl;
     cout << "-------------------------------------------------------------" << endl;
@@ -112,6 +114,7 @@ void UserManager::loginUser() {
 }
 
 void UserManager::changeLoggedInUserPassword() {
+    system ("cls");
     cout << "                   >>> CHANGE PASSWORD <<<                   " << endl;
     cout << "-------------------------------------------------------------" << endl;
     string newPassword = "";
@@ -130,8 +133,7 @@ void UserManager::changeLoggedInUserPassword() {
         } else {
             cerr << "Failed to update password in file." << endl;
         }
-    }
-    catch (const runtime_error& error) {
+    } catch (const runtime_error& error) {
         cerr << "Error: " << error.what() << endl;
     }
     system("pause");
@@ -143,18 +145,16 @@ User& UserManager::findUserById(int userId) {
             return users[i];
         }
     }
-    throw runtime_error("User with given id not found");
+    throw runtime_error("User with given id not found.");
 }
 
-void UserManager::logoutUser()
-{
+void UserManager::logoutUser() {
     loggedInUserId = 0;
     cout<<"You have been logged out."<<endl;
-    system("pause");
+    //system("pause");
 }
 
-bool UserManager::isUserLoggedIn()
-{
+bool UserManager::isUserLoggedIn() {
     if (loggedInUserId > 0)
         return true;
     else
@@ -162,7 +162,6 @@ bool UserManager::isUserLoggedIn()
 }
 
 
-int UserManager::getLoggedInUserId()
-{
+int UserManager::getLoggedInUserId() {
     return loggedInUserId;
 }

@@ -5,6 +5,7 @@
 
 #include "UserManager.h"
 #include "BudgetManager.h"
+#include "AuxiliaryMethods.h"
 
 using namespace std;
 
@@ -42,11 +43,10 @@ public:
     void displayCurrentMonthBalance();
     void displayPreviousMonthBalance();
     void displaySelectedPeriodBalance();
-    /*
+    char wybierzOpcjeZMenuGlownego();
+    char wybierzOpcjeZMenuUzytkownika();
     char getMainMenuSelection();
     char getUserMenuSelection();
-
-    */
 };
 
 #endif

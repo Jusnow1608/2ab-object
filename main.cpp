@@ -4,25 +4,56 @@
 
 int main() {
     BudgetMainApp budgetMainApp("users.xml", "incomes.xml", "expenses.xml");
-    //budgetMainApp.displayAllUsers();
-    //budgetMainApp.registerUser();
-    //budgetMainApp.registerUser();
-    //User user(1,"dastin","1234","Justyna", "Nowak-Szrajnert")
-    budgetMainApp.loginUser();
-    budgetMainApp.addIncome();
-    budgetMainApp.addExpense();
-    //budgetMainApp.displayAllOperations();
-    budgetMainApp.displayCurrentMonthBalance();
-    budgetMainApp.displayPreviousMonthBalance();
-    budgetMainApp.displaySelectedPeriodBalance();
-    //budgetMainApp.addIncome();
-    //budgetMainApp.changeLoggedInUserPassword();
-    //budgetMainApp.displayAllUsers();
-    //budgetMainApp.logoutUser();
 
+    char choice;
 
+    while (true) {
+        if (budgetMainApp.isUserLoggedIn() == false) {
+            choice = budgetMainApp.getMainMenuSelection();
 
+            switch (choice) {
+            case '1':
+                budgetMainApp.registerUser();
+                break;
+            case '2':
+                budgetMainApp.loginUser();
+                break;
+            case '9':
+                exit(0);
+                break;
+            default:
+                cout << endl << "There is no such option in the menu." << endl << endl;
+                system("pause");
+                break;
+            }
+        } else {
+            choice = budgetMainApp.getUserMenuSelection();
 
+            switch (choice) {
+            case '1':
+                budgetMainApp.addIncome();
+                break;
+            case '2':
+                budgetMainApp.addExpense();
+                break;
+            case '3':
+                budgetMainApp.displayCurrentMonthBalance();
+                break;
+            case '4':
+                budgetMainApp.displayPreviousMonthBalance();
+                break;
+            case '5':
+                budgetMainApp.displaySelectedPeriodBalance();
+                break;
+            case '6':
+                budgetMainApp.changeLoggedInUserPassword();
+                break;
+            case '7':
+                budgetMainApp.logoutUser();
+                break;
+            }
+        }
+    }
     return 0;
 }
 //Tests
@@ -74,19 +105,3 @@ int _main() { //dataDzisiejszaDniWMiesiacuRokPrzestepny
     cout<<DateMethods::formatStringDateToInt (data);
     return 0;
 }
-
-/*int ObliczDatyPoprzedniegoMiesiacaISprawdzCzyPodanaDataMiesciSieWZakresieDat_main() {
-    string testDate = "2025-10-15";
-
-    cout << "Pierwszy dzien poprzedniego miesiaca: " << getFirstDayOfPreviousMonth() << '\n';
-    cout << "Ostatni dzien poprzedniego miesiaca: " << getLastDayOfPreviousMonth() << '\n';
-
-    if (isInPreviousMonth(testDate)) {
-        cout << "Data " << testDate << " nalezy do poprzedniego miesiaca.\n";
-    } else {
-        cout << "Data " << testDate << " NIE nalezy do poprzedniego miesiaca.\n";
-    }
-
-    return 0;
-}
-*/
