@@ -89,14 +89,6 @@ int DateMethods::getDaysInMonth(int year, int month) {
     return daysInMonth;
 }
 
-int DateMethods::getDaysInCurrentMonth() {
-    tm now = getNow();
-    int year = now.tm_year + 1900;
-    int month = now.tm_mon + 1;
-    int daysInCurrentMonth = getDaysInMonth(year, month);
-    return daysInCurrentMonth;
-}
-
 string DateMethods::getPreviousMonthFirstDay() {
     tm date = getNow();
     date.tm_mon -= 1;
@@ -135,28 +127,11 @@ string DateMethods::getCurrentMonthLastDay() {
 }
 
 
-bool DateMethods::isInPreviousMonth(const string &date) {
-    string pierwszyDzien = getPreviousMonthFirstDay();  // np. "2025-10-01"
-    string ostatniDzien = getPreviousMonthLastDay();    // np. "2025-10-31"
-
-    if (date >= pierwszyDzien && date <= ostatniDzien)
-        return true;
-    else
-        return false;
-}
-
 bool isDateEarlier(string dataPierwsza, string dataDruga) {
     if (dataPierwsza < dataDruga)
         return true;
     else
         return false;
-}
-
-bool DateMethods::isDateBefore(const string& d1, const string& d2) {
-    int intDate1 = formatStringDateToInt(d1);
-    int intDate2 = formatStringDateToInt(d2);
-    bool result = (intDate1 < intDate2);
-    return result;
 }
 
 

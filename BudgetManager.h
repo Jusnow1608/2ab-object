@@ -26,7 +26,6 @@ class BudgetManager {
 
     Operation getNewOperationDetails(const Type &type);
     void displayOperations(const vector<Operation> &operations, const string &title);
-    void displayOperationData(const Operation & operation);
     double calculateOperationsSum(const vector<Operation> &operations);
     void sortOperationsByDate(vector<Operation> &operations);
     void displayBalance(int startDate, int endDate);
@@ -38,10 +37,8 @@ class BudgetManager {
 public:
     BudgetManager(const string &incomeFileName,const string &expenseFileName, int loggedInUserId)
         : incomeFile(incomeFileName, Type::INCOME), expenseFile(expenseFileName, Type::EXPENSE),LOGGED_IN_USER_ID(loggedInUserId) {
-
         incomeFile.loadOperationsFromFile(incomes, LOGGED_IN_USER_ID);
         expenseFile.loadOperationsFromFile(expenses, LOGGED_IN_USER_ID);
-
     }
 
     void addOperation(const Type &type);

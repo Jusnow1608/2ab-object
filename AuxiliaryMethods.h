@@ -12,12 +12,10 @@ class AuxiliaryMethods
 {
 public:
     static string readLine();
-
     static char readChar();
     static bool validateInput(string &input);
     static string readNewValue(const string &message);
     static string typeToString(const Type &type);
-
 };
 
 #endif

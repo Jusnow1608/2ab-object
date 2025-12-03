@@ -6,7 +6,6 @@
 using namespace std;
 
 class File {
-
     const string FILE_NAME;
 
 public:
