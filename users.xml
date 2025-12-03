@@ -62,4 +62,11 @@
 <name>Wojciech</name>
 <surname>Kowalski</surname>
 </user>
+<user>
+<id>10</id>
+<login>1</login>
+<password>123</password>
+<name>Justyna</name>
+<surname>Nowak</surname>
+</user>
 </users>

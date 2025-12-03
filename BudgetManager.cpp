@@ -158,7 +158,7 @@ void BudgetManager::displayBalance(int startDate, int endDate) {
     double sumExpenses = displayBalanceForType(startDate, endDate, Type::EXPENSE);
     double balance = sumIncomes - sumExpenses;
 
-    cout <<endl<< "                     >>> BALANCE <<<                         " << endl;
+    cout << "                     >>> BALANCE <<<                         " << endl;
     cout << "-------------------------------------------------------------"  << endl;
     cout << "Total INCOME:  " << sumIncomes << endl;
     cout << "Total EXPENSE: " << sumExpenses << endl;
@@ -198,7 +198,7 @@ vector<Operation> BudgetManager::filterOperationsByDate(const vector<Operation> 
 
 void BudgetManager::displayCurrentMonthBalance() {
     system("cls");
-    cout << "                  >>> CURRENT MONTH BALANCE <<<              " << endl;
+    cout << "                >>> CURRENT MONTH BALANCE <<<                " << endl;
     cout << "-------------------------------------------------------------"  << endl<<endl;
     int startDate = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthFirstDay());
     int endDate   = DateMethods::formatStringDateToInt(DateMethods::getCurrentMonthLastDay());
@@ -207,7 +207,7 @@ void BudgetManager::displayCurrentMonthBalance() {
 }
 void BudgetManager::displayPreviousMonthBalance() {
     system("cls");
-    cout << "                 >>> PREVIOUS MONTH BALANCE <<<              " << endl;
+    cout << "                >>> PREVIOUS MONTH BALANCE <<<               " << endl;
     cout << "-------------------------------------------------------------"  << endl<<endl;
     int startDate = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthFirstDay());
     int endDate   = DateMethods::formatStringDateToInt(DateMethods::getPreviousMonthLastDay());
@@ -218,7 +218,7 @@ void BudgetManager::displayPreviousMonthBalance() {
 
 void BudgetManager::displaySelectedPeriodBalance() {
     system("cls");
-    cout << "               >>> BALANCE IN SELECTED PERIOD <<<            " << endl;
+    cout << "              >>> BALANCE IN SELECTED PERIOD <<<             " << endl;
     cout << "-------------------------------------------------------------"  << endl;
     string startDateString = readValidDate("Please provide start date (YYYY-MM-DD): ");
     string endDateString   = readValidDate("Please provide end date (YYYY-MM-DD): ");
