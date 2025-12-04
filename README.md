@@ -20,11 +20,11 @@ All data is stored in XML files and filtered by the logged-in user ID, ensuring 
 ## Table of Contents
 - [Project Structure](#project-structure)
 - [Data Storage](#data-storage)
-- [Adding Operations](#adding-operations)
 - [Users](#users)
    - [Login and Registration](#login-and-registration)
-   - [Logout](#logout)
+   - [Password change](#password-change)
 - [Financial Operations](#financial-operations)
+   - [Adding Operations](#adding-operations)
    - [Display balance](#display-balance)
 - [UML Diagram](#uml-diagram)
 - [Tests](#tests)
@@ -59,8 +59,15 @@ The application uses XML files:
 - `incomes.xml` – stores incomes,
 - `expenses.xml` – stores expenses,
 
+Each user account contains:
+- `id` – unique user identifier,
+- `login` – unique user login,
+- `password` – password to user account,
+- `name` – user name,
+- `surname` – user surname.
+
 Each operation contains:
-- `id` – unique identifier,
+- `id` – unique operation identifier,
 - `userId` – ID of the user who owns the operation,
 - `date` – operation date,
 - `item` – description,
@@ -69,6 +76,30 @@ Each operation contains:
 Operations are filtered by `userId`, so each user sees only their own data.
 
 ---
+
+## Users
+
+### Login and Registration
+
+Registration creates a new user in users.xml.
+Login verifies credentials and assigns LOGGED_IN_USER_ID.
+
+Registration console view:
+
+<img src="assets/images/user-register.png" alt="User register" width="600" />
+
+Login console view:
+
+<img src="assets/images/user-login.png" alt="User login" width="600" />
+
+### Password change
+
+Password change console view:
+
+<img src="assets/images/password-change.png" alt="Password change" width="600" />
+
+## Financial Operations
+Operations are displayed in a table with columns: Date, Item, Amount.
 
 ## Adding Operations
 
@@ -85,38 +116,27 @@ Below are screenshots showing the actual console output:
 
 ---
 
-## Users
-
-### Login and Registration
-
-Registration creates a new user in users.xml.
-Login verifies credentials and assigns LOGGED_IN_USER_ID.
-
-Registration console view:
-
-Login console view:
-
-### Logout
-
-Logout console view:
-
-
-## Financial Operations
-Operations are displayed in a table with columns: Date, Item, Amount.
-
-### Display Incomes
-Example console table:
-
 ### Display balance
 Balance can be displayed for:
 - Current month,
 - Previous month,
 - Custom date range.
-Balance console output:
+Current month balance console output:
+
+<img src="assets/images/current-month-balance.png" alt="Current month balance" width="600" />
+
+Previous month balance console output:
+
+<img src="assets/images/previous-month-balance.png" alt="Previous month balance" width="600" />
+
+Previous month balance console output:
+
+<img src="assets/images/balance-for-selected-period.png" alt="Balance for selected period" width="600" />
 
 ## UML Diagram
 The following UML diagram was created using UMLet version 15.1 and illustrates the main classes and their relationships:
-UML Diagram
+
+<img src="assets/images/planUMLAB.v2.png" alt="UML Diagram" width="1000" /> 
 
 ## Tests
 Unit tests cover:
