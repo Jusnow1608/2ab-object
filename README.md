@@ -19,15 +19,19 @@ All data is stored in XML files and filtered by the logged-in user ID, ensuring 
 
 ## Table of Contents
 - [Project Structure](#project-structure)
+- [UML Diagram](#uml-diagram)
 - [Data Storage](#data-storage)
+- [Menu](#menu)
 - [Users](#users)
    - [Login and Registration](#login-and-registration)
    - [Password change](#password-change)
+   - [Logout](#logout)
 - [Financial Operations](#financial-operations)
    - [Adding Operations](#adding-operations)
+   - [Operations and balance view](#operations-and-balance-view)
    - [Display balance](#display-balance)
-- [UML Diagram](#uml-diagram)
 - [Tests](#tests)
+- [Future Improvements](#future-improvements)
 
 ---
 
@@ -52,6 +56,13 @@ The project consists of several classes and helper structures:
 
 ---
 
+## UML Diagram
+The following UML diagram was created using UMLet version 15.1 and illustrates the main classes and their relationships:
+
+<img src="assets/images/planUMLAB.v2.png" alt="UML Diagram" width="1000" /> 
+
+---
+
 ## Data Storage
 
 The application uses XML files:
@@ -66,6 +77,10 @@ Each user account contains:
 - `name` – user name,
 - `surname` – user surname.
 
+User account view in users.xml:
+
+<img src="assets/images/user-file.png" alt="User file" width="400" />
+
 Each operation contains:
 - `id` – unique operation identifier,
 - `userId` – ID of the user who owns the operation,
@@ -73,7 +88,31 @@ Each operation contains:
 - `item` – description,
 - `amount` – value of the operation.
 
+Income view in incomes.xml:
+
+<img src="assets/images/income-file.png" alt="Income file" width="400" />
+
+Expense view in expenses.xml:
+
+<img src="assets/images/expense-file.png" alt="Expense file" width="400" />
+
 Operations are filtered by `userId`, so each user sees only their own data.
+
+---
+
+## Menu
+
+Main menu allows a new user to select basic operations related with registation and login.
+
+Main menu console view:
+
+<img src="assets/images/main-menu.png" alt="Main menu" width="600" />
+
+User menu is available only for logged user and allows to select operations related with finance and user account management.
+
+User menu console view:
+
+<img src="assets/images/user-menu.png" alt="User menu" width="600" />
 
 ---
 
@@ -94,49 +133,78 @@ Login console view:
 
 ### Password change
 
+Password change updates a user password in users.xml.
+
 Password change console view:
 
 <img src="assets/images/password-change.png" alt="Password change" width="600" />
 
+### Logout
+
+Password change console view:
+
+<img src="assets/images/Logout.png" alt="Logout" width="600" />
+
+---
+
 ## Financial Operations
-Operations are displayed in a table with columns: Date, Item, Amount.
 
-## Adding Operations
+For a logged in user are available financial operations below:
+- adding operations,
+- viewing operations and balance tables,
+- displaying balance for selected period.
 
-Adding an income or expense is done through a console form.  
+### Adding Operations
+
+Adding an income or expense is done through a console form and creates a new operation in incomes.xml and expences.xml accordingly.
 Below are screenshots showing the actual console output:
 
-### Add Income
+#### Add Income
 
 <img src="assets/images/add-income.png" alt="Add Income" width="600" />
 
-### Add Expense
+#### Add Expense
 
 <img src="assets/images/add-expense.png" alt="Add Expense" width="600" />
 
----
+
+### Operations and balance view
+
+Operations are displayed in a table with columns: Date, Item, Amount.
+
+#### Income view
+
+<img src="assets/images/income-view.png" alt="Income view" width="600" />
+
+#### Expense view
+
+<img src="assets/images/expense-view.png" alt="Expense view" width="600" />
+
+#### Balance view
+
+<img src="assets/images/balance-view.png" alt="Balance view" width="600" />
 
 ### Display balance
 Balance can be displayed for:
 - Current month,
 - Previous month,
 - Custom date range.
-Current month balance console output:
+
+Below are screenshots showing the actual console output:
+
+#### Current month balance
 
 <img src="assets/images/current-month-balance.png" alt="Current month balance" width="600" />
 
-Previous month balance console output:
+#### Previous month balance
 
 <img src="assets/images/previous-month-balance.png" alt="Previous month balance" width="600" />
 
-Previous month balance console output:
+#### Balance for selected period
 
 <img src="assets/images/balance-for-selected-period.png" alt="Balance for selected period" width="600" />
 
-## UML Diagram
-The following UML diagram was created using UMLet version 15.1 and illustrates the main classes and their relationships:
-
-<img src="assets/images/planUMLAB.v2.png" alt="UML Diagram" width="1000" /> 
+---
 
 ## Tests
 Unit tests cover:
@@ -144,6 +212,8 @@ Unit tests cover:
 - Adding and filtering operations,
 - XML file handling,
 - Balance calculation logic.
+
+---
 
 ## Future Improvements
 - Better table formatting with dynamic column widths,
