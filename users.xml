@@ -20,4 +20,11 @@
 <name>Karol</name>
 <surname>Piorunski</surname>
 </user>
+<user>
+<id>4</id>
+<login>jankowalski</login>
+<password>*****</password>
+<name>Jan</name>
+<surname>Kowalski</surname>
+</user>
 </users>
