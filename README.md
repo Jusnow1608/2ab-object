@@ -1,4 +1,4 @@
-# BudgetApp – Simple Budget Management Application
+# BudgetApp – Simple budget management application
 
 BudgetApp is a console-based application written in **C++**, designed to help users manage their personal finances.  
 It allows tracking incomes and expenses, calculating balances for different time periods, and storing data in XML files.
@@ -17,7 +17,7 @@ All data is stored in XML files and filtered by the logged-in user ID, ensuring 
 
 ---
 
-## Table of Contents
+## Table of contents
 - [Project Structure](#project-structure)
 - [UML Diagram](#uml-diagram)
 - [Data Storage](#data-storage)
@@ -35,7 +35,7 @@ All data is stored in XML files and filtered by the logged-in user ID, ensuring 
 
 ---
 
-## Project Structure
+## Project structure
 
 The project consists of several classes and helper structures:
 
@@ -56,14 +56,14 @@ The project consists of several classes and helper structures:
 
 ---
 
-## UML Diagram
+## UML diagram
 The following UML diagram was created using UMLet version 15.1 and illustrates the main classes and their relationships:
 
 <img src="assets/images/planUMLAB.v2.png" alt="UML Diagram" width="1000" /> 
 
 ---
 
-## Data Storage
+## Data storage
 
 The application uses XML files:
 - `users.xml` – stores user accounts,
@@ -77,10 +77,6 @@ Each user account contains:
 - `name` – user name,
 - `surname` – user surname.
 
-User account view in users.xml:
-
-<img src="assets/images/user-file.png" alt="User file" width="400" />
-
 Each operation contains:
 - `id` – unique operation identifier,
 - `userId` – ID of the user who owns the operation,
@@ -88,16 +84,14 @@ Each operation contains:
 - `item` – description,
 - `amount` – value of the operation.
 
-Income view in incomes.xml:
-
-<img src="assets/images/income-file.png" alt="Income file" width="400" />
-
-Expense view in expenses.xml:
-
-<img src="assets/images/expense-file.png" alt="Expense file" width="400" />
-
 Operations are filtered by `userId`, so each user sees only their own data.
 
+### XML file views
+<div style="display: flex; gap: 20px;">
+  <img src="assets/images/user-file.png" alt="User file" width="250" />
+  <img src="assets/images/income-file.png" alt="Income file" width="250" />
+  <img src="assets/images/expense-file.png" alt="Expense file" width="250" />
+</div>
 ---
 
 ## Menu
@@ -118,70 +112,54 @@ User menu console view:
 
 ## Users
 
-### Login and Registration
+### Login and registration
 
-Registration creates a new user in users.xml.
-Login verifies credentials and assigns LOGGED_IN_USER_ID.
-
-Registration console view:
+- Registration creates a new user in `users.xml`.
+- Login verifies credentials and assigns `LOGGED_IN_USER_ID`.
+- Login attempts are limited to 3 trials before lockout.
 
 <img src="assets/images/user-register.png" alt="User register" width="600" />
-
-Login console view:
-
 <img src="assets/images/user-login.png" alt="User login" width="600" />
 
 ### Password change
 
-Password change updates a user password in users.xml.
-
-Password change console view:
+- Password change updates a user password in `users.xml`.
+- Empty passwords are rejected by validation.
 
 <img src="assets/images/password-change.png" alt="Password change" width="600" />
 
 ### Logout
 
-Password change console view:
+- Logging out resets the session and clears the active `BudgetManager`.
 
-<img src="assets/images/Logout.png" alt="Logout" width="600" />
+<img src="assets/images/Logout.png" alt="Logout" width="400" />
 
 ---
 
 ## Financial Operations
 
-For a logged in user are available financial operations below:
-- adding operations,
-- viewing operations and balance tables,
-- displaying balance for selected period.
+For a logged in user the following financial operations are available:
+- Adding operations,
+- Viewing operations and balance tables,
+- Displaying balance for selected period.
 
 ### Adding Operations
 
-Adding an income or expense is done through a console form and creates a new operation in incomes.xml and expences.xml accordingly.
-Below are screenshots showing the actual console output:
-
-#### Add Income
+- Adding an income or expense is done through a console form.
+- Dates can be today or user-provided (`YYYY-MM-DD`).
+- Amounts are validated (dot/comma accepted, must be numeric).
+- Operations are saved in `incomes.xml` or `expenses.xml`.
 
 <img src="assets/images/add-income.png" alt="Add Income" width="600" />
-
-#### Add Expense
-
 <img src="assets/images/add-expense.png" alt="Add Expense" width="600" />
-
 
 ### Operations and balance view
 
-Operations are displayed in a table with columns: Date, Item, Amount.
-
-#### Income view
+Operations are displayed in a table with columns: Date, Item, Amount.  
+Tables are sorted chronologically (oldest first).
 
 <img src="assets/images/income-view.png" alt="Income view" width="600" />
-
-#### Expense view
-
 <img src="assets/images/expense-view.png" alt="Expense view" width="600" />
-
-#### Balance view
-
 <img src="assets/images/balance-view.png" alt="Balance view" width="600" />
 
 ### Display balance
@@ -190,34 +168,45 @@ Balance can be displayed for:
 - Previous month,
 - Custom date range.
 
-Below are screenshots showing the actual console output:
-
-#### Current month balance
+When displaying balance:
+- All operations are **filtered by date range**,
+- Then **sorted chronologically** (oldest first),
+- Then **grouped by type** (`INCOME` or `EXPENSE`),
+- Each group is **summed** and shown in a formatted table.
 
 <img src="assets/images/current-month-balance.png" alt="Current month balance" width="600" />
-
-#### Previous month balance
-
 <img src="assets/images/previous-month-balance.png" alt="Previous month balance" width="600" />
-
-#### Balance for selected period
-
 <img src="assets/images/balance-for-selected-period.png" alt="Balance for selected period" width="600" />
 
 ---
 
 ## Tests
 Unit tests cover:
-- Date and amount validation,
-- Adding and filtering operations,
-- XML file handling,
-- Balance calculation logic.
+- **Date validation**:
+  - Format check (`YYYY-MM-DD`),
+  - Leap year detection,
+  - Range validation,
+- **Amount validation**:
+  - Accepts both dot and comma,
+  - Rejects non-numeric input,
+- **Operation logic**:
+  - Adding operations,
+  - Filtering by date,
+  - Sorting by date,
+- **File handling**:
+  - XML read/write,
+  - ID generation,
+- **Balance calculation**:
+  - Correct summing of filtered operations,
+  - Accurate difference between incomes and expenses.
 
 ---
 
 ## Future Improvements
 - Better table formatting with dynamic column widths,
-- Extended test coverage,
-- Exporting data to external formats.
+- Extended test coverage with controller-level tests,
+- Exporting data to external formats,
+- Error handling views (invalid input, failed file operations),
+- Coverage reports.
 
 
